@@ -1,7 +1,7 @@
 <!-- Animated Header -->
 
 <h1 align="center">Hi 👋, I'm Manav</h1>
-<h3 align="center"> AI/ML Enthusiast • Quant Trader Enthusiast •Open Source Contributor</h3>
+<h3 align="center"> AI/ML Enthusiast • Quant Trader Enthusiast • Open Source Contributor</h3>
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=800&center=true&vCenter=true&width=600&lines=Building+Alpha+with+AI+%26+Data;Quantitative+Trading+Systems;Machine+Learning+for+Finance;Open+Source+%7C+GSoC+Focused" />
