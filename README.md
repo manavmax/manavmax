@@ -136,11 +136,11 @@ Markets**
 </p>
 
 <!--🏆TROPHY / 🌐WEBSITE: https://github.com/ryo-ma/github-profile-trophy -->
-<div align="center">
+<div align="justify">
 <img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=1&column=4&title=MultiLanguage,Commits,Followers,PullRequest">
  </div>
 
-<div align="center">
+<div align="justify">
 <img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=1&column=4&title=Repositories,Issues,Organizations,Stars">
  </div>
 
