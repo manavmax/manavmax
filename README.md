@@ -14,7 +14,10 @@
   <img src="https://img.shields.io/badge/Status-IEEE%20Accepted-success?style=flat" />
 </p>
 
----
+<!--🖼️RICK-->
+<p align="center">
+<img src="https://c.tenor.com/p7IgwS17V0sAAAAC/rtj-rick-and-morty.gif" height="240" width="370">
+
 
 ## 🧠 About Me
 
@@ -132,7 +135,22 @@ Markets**
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&theme=tokyo-night&hide_border=true" />
 </p>
 
+<!--🏆TROPHY / 🌐WEBSITE: https://github.com/ryo-ma/github-profile-trophy -->
+<div align="center">
+<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=1&column=4&title=MultiLanguage,Commits,Followers,PullRequest">
+ </div>
+
+<div align="center">
+<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=1&column=4&title=Repositories,Issues,Organizations,Stars">
+ </div>
+
 ---
+<!--🐍💬SNAKETITLE / 🌐WEBSITE: https://textanim.com/ -->
+<p align="center">
+<img src="https://i.imgur.com/x1KbuCq.gif" width="500">
+
+<!--🐍📈SNAKEGRAPH / 🌐WEBSITE: https://github.com/Platane/snk & https://github.com/ironmaniiith/Github-profile-name-writer -->
+<img src="https://raw.githubusercontent.com/trinib/trinib/snake/github-snake-dark.svg" width="100%">
 
 ## 🏆 Highlights
 
@@ -159,6 +177,6 @@ Markets**
 
 ## ⚡ Philosophy
 
-> Not just predicting markets — building systems that consistently outperform them.
+> Not just building projects — building systems that consistently outperform the market competitors.
 
 ---
