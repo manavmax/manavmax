@@ -19,23 +19,22 @@
 <img src="https://c.tenor.com/p7IgwS17V0sAAAAC/rtj-rick-and-morty.gif" height="240" width="370">
 
 
-## 🧠 About Me
+## 🦍 About Me
 
-* 🔬 Passionate about **Machine Learning & Artificial Intelligence**
-* 📊 Building **alpha-generating quantitative systems** for crypto markets
-* 💼 Focused on **real-world performance (returns, Sharpe, drawdown)**
-* 🏆 Targeting **high-impact open source contribution & research credibility**
-* 🛠️ Strong in **C++, Python, DSA, System Design**
+*  Passionate about **Machine Learning & Artificial Intelligence**
+*  Building **alpha-generating quantitative systems** for crypto markets
+*  Focused on **real-world performance (returns, Sharpe, drawdown)**
+*  Targeting **high-impact open source contribution & research credibility**
+*  Strong in **C++, Python, DSA, System Design**
 
----
 
-## 🚀 Ongoing Project
+## 📽️ Ongoing Project
 
-### 📈 Bitcoin Alpha Prediction System (Quant AI Engine)
+###  Bitcoin Alpha Prediction System (Quant AI Engine)
 
 > A production-oriented, research-backed system designed to generate **consistent alpha** in crypto markets using **ML + on-chain intelligence + market structure modeling**.
 
-#### 📊 Performance Snapshot (Version 2)
+####  Performance Snapshot (Version 2)
 
 | Metric            | Value                                 |
 | ----------------- | ------------------------------------- |
@@ -44,39 +43,37 @@
 | Edge              | **~7.5x Outperformance**              |
 | Focus             | Sharpe ↑ • Drawdown ↓ • Consistency ↑ |
 
-#### 🧠 Core Architecture
+####  Core Architecture
 
 * On-chain features (miner revenue, tx volume, activity)
 * Market microstructure + technical signals
 * ML-based decision layer (ensemble/stacking ready)
 * Strategy evaluation via **real trading metrics (NOT just accuracy)**
 
-#### 💼 Positioning
+####  Positioning
 
 > Designed in the direction of **quant hedge fund-style alpha models**, where performance is measured by **returns, risk, and robustness**, not just predictions.
 
-#### 🚧 Roadmap
+####  Roadmap
 
 * **V3:** Signal refinement, feature engineering, regime detection
 * **V4:** Advanced ML architecture, robustness, live deployment readiness
 
----
 
 ## 📂 Projects
 
-### 🔹 Promac (3D Portfolio + E-Commerce Platform)
+###  Promac (3D Portfolio + E-Commerce Platform)
 
 * Futuristic **3D interactive web experience**
 * Hybrid **portfolio + product platform**
 * Focus: **premium UI/UX + real-world usability**
 
-### 🔹 Face Detection System (Qt + OpenCV)
+###  Face Detection System (Qt + OpenCV)
 
 * Real-time detection using **DNN models**
 * Manual capture, thumbnails, UI polish
 * Built with **Qt (C++) + OpenCV**
 
----
 
 ## 📄 Research & Publications
 
@@ -86,37 +83,35 @@
 Selective Directional Trading in Cryptocurrency
 Markets**
 
-* ✅ Accepted in **IEEE**
-* 📅 Publishing within **~2 months**
-* 🔬 Focus:
+*  Accepted in **IEEE**
+*  Publishing within **~2 months**
+*  Focus:
 
   * ML for financial prediction
   * On-chain signal engineering
   * Strategy optimization using real metrics
 
----
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
-### 👨‍💻 Languages
+###  Languages
 
 ![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge\&logo=cplusplus\&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge\&logo=python\&logoColor=white)
 
-### 🤖 AI/ML
+###  AI/ML
 
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-FF6F00?style=for-the-badge\&logo=tensorflow\&logoColor=white)
 ![Deep Learning](https://img.shields.io/badge/Deep%20Learning-8A2BE2?style=for-the-badge)
 
-### ⚙️ Tools & Frameworks
+###  Tools & Frameworks
 
 ![Qt](https://img.shields.io/badge/Qt-41CD52?style=for-the-badge\&logo=qt\&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge\&logo=opencv\&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge\&logo=git\&logoColor=white)
 
----
 
-## 📊 GitHub Stats
+## GitHub Stats
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&theme=tokyonight&hide_border=true" height="165" />
@@ -127,55 +122,51 @@ Markets**
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&theme=tokyonight&hide_border=true" height="165" />
 </p>
 
----
+<!-- 🏆 TROPHIES -->
+<div align="center">
 
-## 🧩 Contribution Activity
+<br>
+
+<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=2&column=4" />
+
+<br><br>
+
+</div>
+
+
+## Contribution Activity
 
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&theme=tokyo-night&hide_border=true" />
 </p>
 
-<!--🏆TROPHY / 🌐WEBSITE: https://github.com/ryo-ma/github-profile-trophy -->
-<div align="justify">
-<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=1&column=4&title=MultiLanguage,Commits,Followers,PullRequest">
- </div>
-
-<div align="justify">
-<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=1&column=4&title=Repositories,Issues,Organizations,Stars">
- </div>
-
----
 <!--🐍💬SNAKETITLE / 🌐WEBSITE: https://textanim.com/ -->
 <p align="center">
 <img src="https://i.imgur.com/x1KbuCq.gif" width="500">
 
 ![Snake animation](https://raw.githubusercontent.com/manavmax/manavmax/output/github-snake-dark.svg)
 
-## 🏆 Highlights
+##  Highlights
 
-* 🧠 Building **real alpha trading system (1100%+ backtested return)**
-* 📄 **IEEE accepted research paper** (AI + Finance)
-* ⚙️ Strong foundation in **DSA, ML, and system design**
-* 🌍 Active in **open source contributions**
+*  Building **real alpha trading system (1100%+ backtested return)**
+*  **IEEE accepted research paper** (AI + Finance)
+*  Strong foundation in **DSA, ML, and system design**
+*  Active in **open source contributions**
 
----
 
-## 🎯 Current Focus
+## Current Focus
 
-* 📈 Scaling **quant models to production-grade systems**
-* 🔬 Publishing **AI + Finance research**
-* 🧠 Mastering **advanced algorithms & system design**
-* 🌍 Contributing to **high-impact OSS**
+*  Scaling **quant models to production-grade systems**
+*  Publishing **AI + Finance research**
+*  Mastering **advanced algorithms & system design**
+*  Contributing to **high-impact OSS**
 
----
 
-## 🌐 Connect With Me
+## Connect With Me
 * 📧 Email: (onlyfordrivebackup3@gmail.com)
 
----
 
-## ⚡ Philosophy
+## Philosophy
 
 > Not just building projects — building systems that consistently outperform the market competitors.
 
----
