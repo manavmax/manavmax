@@ -149,7 +149,7 @@ Markets**
 <p align="center">
 <img src="https://i.imgur.com/x1KbuCq.gif" width="500">
 
-![Snake animation](https://raw.githubusercontent.com/Manavmax/Manavmax/output/github-snake-dark.svg)
+![Snake animation](https://raw.githubusercontent.com/manavmax/manavmax/output/github-snake-dark.svg)
 
 ## 🏆 Highlights
 
