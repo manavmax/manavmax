@@ -171,40 +171,6 @@ Markets**
 ![Amazon S3](https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white)
 
 
-## GitHub Stats
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&theme=tokyonight&hide_border=true" height="165" />
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=manavmax&theme=tokyonight&hide_border=true" height="165" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&theme=tokyonight&hide_border=true" height="165" />
-</p>
-
-<!-- 🏆 TROPHIES -->
-<div align="center">
-
-<br>
-
-<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=2&column=4" />
-
-<br><br>
-
-</div>
-
-
-## Contribution Activity
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&theme=tokyo-night&hide_border=true" />
-</p>
-
-<!--🐍💬SNAKETITLE / 🌐WEBSITE: https://textanim.com/ -->
-<p align="center">
-<img src="https://i.imgur.com/x1KbuCq.gif" width="500">
-
-![Snake animation](https://raw.githubusercontent.com/manavmax/manavmax/output/github-snake-dark.svg)
 
 ##  Highlights
 
