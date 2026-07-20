@@ -34,13 +34,13 @@
 
 > A production-oriented, research-backed system designed to generate **consistent alpha** in crypto markets using **ML + on-chain intelligence + market structure modeling**.
 
-####  Performance Snapshot (Version 2)
+####  Performance Snapshot (Version 3)
 
 | Metric            | Value                                 |
 | ----------------- | ------------------------------------- |
-| Total Return (4Y) | **1106.2%**                           |
+| Total Return (4Y) | **450%%**                           |
 | Buy & Hold        | 147.6%                                |
-| Edge              | **~7.5x Outperformance**              |
+| Edge              | **~3.5x Outperformance**              |
 | Focus             | Sharpe ↑ • Drawdown ↓ • Consistency ↑ |
 
 ####  Core Architecture
