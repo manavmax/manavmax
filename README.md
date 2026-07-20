@@ -189,7 +189,7 @@ Markets**
 
 ##  Highlights
 
-*  Building **real alpha trading system (1100%+ backtested return)**
+*  Building **real alpha trading system (450%+ backtested return)**
 *  **IEEE accepted research paper** (AI + Finance)
 *  Strong foundation in **DSA, ML, and system design**
 *  Active in **open source contributions**
