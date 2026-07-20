@@ -38,7 +38,7 @@
 
 | Metric            | Value                                 |
 | ----------------- | ------------------------------------- |
-| Total Return (4Y) | **450%%**                           |
+| Total Return (4Y) | **450%**                           |
 | Buy & Hold        | 147.6%                                |
 | Edge              | **~3.5x Outperformance**              |
 | Focus             | Sharpe ↑ • Drawdown ↓ • Consistency ↑ |
