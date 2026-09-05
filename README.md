@@ -6,7 +6,7 @@
   <img alt="MANAVMAX — Manav Sharma. I build learning systems, then build the harness that tries to break them." src="assets/ident-dark.svg" width="100%">
 </picture>
 
-<!-- dateline:start --><code>SESSION 2026-09-05</code> · <code>PLATES 10</code> · <code>RENDER build/render.py</code> · <code>CHECK build/verify.py</code> · <code>JS 0</code><!-- dateline:end -->
+<!-- dateline:start --><code>SESSION 2026-09-06</code> · <code>PLATES 14</code> · <code>RENDER build/render.py</code> · <code>CHECK build/verify.py</code> · <code>JS 0</code><!-- dateline:end -->
 
 </div>
 
@@ -30,9 +30,22 @@ would make the other two worth less.
 <samp><b>KEY</b> — <code>PEER-REVIEWED</code> outside review passed · <code>SHIPPED</code> tested and running · <code>FALSIFIED</code> looked for the effect, did not find it, published anyway · <code>UNDER AUDIT</code> still validating, nothing claimed until it clears</samp>
 
 <picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/receipt-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/receipt-light.svg">
+  <img alt="Proof-carrying execution: the receipt recomputes byte-for-byte, and the replay found no edge — 10 of 26 orders beat the counterfactual, average edge −451.96 bps" src="assets/receipt-dark.svg" width="100%">
+</picture>
+
+A receipt is only worth something if a stranger can check it. Every routing decision in
+Regime-Route emits one, and anyone holding the same tape can recompute the digest and compare it
+byte-for-byte — no trust in my log required. **That machinery works.** Pointed at 13M+ real
+order-book rows with paired counterfactuals, it came back and said the effect is not there: the
+honest, final conclusion was that **no economically meaningful edge was found.** That is a
+feature, not a failure to hide — it is what validation discipline looks like when the answer is no.
+
+<picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/regime-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/regime-light.svg">
-  <img alt="Selective signal: three latent regimes. The model takes positions in two and stands down in the volatile third." src="assets/regime-dark.svg" width="100%">
+  <img alt="Selective signal: three latent regimes. The model takes positions in two and stands down in the volatile third, where its own confidence sits below the act threshold." src="assets/regime-dark.svg" width="100%">
 </picture>
 
 ```
@@ -42,12 +55,25 @@ raw tape ──> temporal clustering ──> regime label ──┬──> confi
 ```
 
 This is what the paper argues, drawn rather than described. Cluster the tape into latent regimes
-with no labels, then let the classifier **decline to act** in the regime it cannot call. A model
-that stands down 29% of the time and is right when it speaks beats one that always has an opinion.
-The plate is a **schematic of the rule, not backtest output** — the shape is illustrative, the
-argument is not.
+with no labels, then let the classifier **decline to act** in the regime it cannot call. The lower
+lane is the part that makes it a rule rather than a slogan: the model's own confidence, with the
+line it has to clear before a position is allowed. A model that stands down 29% of the time and is
+right when it speaks beats one that always has an opinion. The plate is a **schematic of the rule,
+not backtest output** — the shape is illustrative, the argument is not.
 
-### <samp>4 · UPSTREAM — THE PART OF THE RECORD I DID NOT GRADE MYSELF</samp>
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/forge-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/forge-light.svg">
+  <img alt="Tensor-Forge: five lowering stages — parse to graph IR, shape specialise, lower to a kernel plan, emit WGSL, dispatch to the GPU. No PyTorch, no CUDA, 5/5 CTest suites." src="assets/forge-dark.svg" width="100%">
+</picture>
+
+No PyTorch and no CUDA underneath means the interesting claim is not that it runs — it is that
+there is nothing below it doing the real work. A tensor graph is parsed, shape-specialised,
+lowered, emitted as WGSL and dispatched, and **you can read what came out of every one of those
+five stages.** 5/5 CTest suites, full CI. The plate is a schematic of the path a kernel takes, not
+a map of the source tree.
+
+### <samp>5 · UPSTREAM — THE PART OF THE RECORD I DID NOT GRADE MYSELF</samp>
 
 <samp>COUNTED LIVE BY THE GITHUB SEARCH API, NOT BY ME</samp>
 <!-- upstream:start -->
@@ -57,7 +83,7 @@ argument is not.
 | **[Oppia](https://github.com/oppia/oppia)** <!-- n:oppia/oppia=10 --> | Oppia Foundation | LEAP team — led a Redis infrastructure upgrade | `10` |
 | **[OpenMetadata](https://github.com/open-metadata/OpenMetadata)** <!-- n:open-metadata/OpenMetadata=1 --> | Collate | metadata platform | `1` |
 
-<samp><b>19</b> pull requests merged by maintainers who owe me nothing · counted on <code>2026-09-05</code></samp>
+<samp><b>19</b> pull requests merged by maintainers who owe me nothing · counted on <code>2026-09-06</code></samp>
 <!-- upstream:end -->
 
 The Oppia one is the one I would point at. The Redis upgrade was unglamorous infrastructure work
@@ -86,7 +112,7 @@ that was **failing CI for every other contributor** — which is exactly why it 
 
 </div>
 
-### <samp>5 · COLOPHON</samp>
+### <samp>7 · COLOPHON</samp>
 
 **Manav Sharma** — final-year B.Tech in Computer Science, Class of 2026, India. He/him.
 Looking for research and systems work where the validation is taken as seriously as the model.
@@ -94,9 +120,11 @@ If a number on this page is wrong, open an issue: I would rather be corrected in
 quoted incorrectly.
 
 ```
-RENDER  build/render.py        ->  5 plates x 2 themes, drawn at 880px, which is GitHub's column width
+RENDER  build/render.py        ->  7 plates x 2 themes, drawn at 880px, which is GitHub's column width
 CHECK   build/verify.py        ->  AA contrast on every ground · data colours separable · nothing under 9px
-                                   in bounds · no baseline collisions · no dangling url(#) · no external fetch
+                                   in bounds · no baseline collisions · 2px of daylight between border and glyph
+                                   no dangling url(#) · no external fetch · reduced-motion escape present
+                                   every plate referenced, every reference real
 LIVE    build/build_readme.py  ->  rewrites the dateline and the merge counts between HTML sentinels
 FONTS   monospace, system stack.  GitHub serves SVG under default-src 'none', so no webfont can load.
 MOTION  CSS @keyframes in the SVG. Allowed by style-src 'unsafe-inline'. No JavaScript runs here.

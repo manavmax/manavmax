@@ -136,11 +136,21 @@ for p in sorted(pathlib.Path("assets").glob("*.svg")):
     for cls in set(w for a in re.findall(r'class="([^"]+)"', src) for w in a.split()):
         if cls not in decl:
             bad.append(f"{p.name}: class .{cls} used but never declared")
-    for kf in set(re.findall(r"animation:\s*([\w-]+)", src)):
+    # `animation:none` is how the reduced-motion block switches motion off, and
+    # `none` is a CSS-wide keyword, not a keyframe name. Reading it as one made
+    # this check fail on all 14 plates the moment that block was added -- a false
+    # positive, and the noisiest kind, because it fires everywhere at once.
+    for kf in set(re.findall(r"animation:\s*([\w-]+)", src)) - {"none", "inherit",
+                                                               "initial", "unset"}:
         if f"@keyframes {kf}" not in src:
             bad.append(f"{p.name}: @keyframes {kf} missing")
+    # Motion on this page is decoration, so a reader who has asked the OS for
+    # less of it must get the finished frame -- not the empty one .r and .f start
+    # from. Every plate animates something, so every plate needs the escape.
+    if "animation" in src and "prefers-reduced-motion" not in src:
+        bad.append(f"{p.name}: animates but has no prefers-reduced-motion block")
 
-    leaves, rows, ntext = walk(root), {}, 0
+    leaves, rows, ntext, inks, boxes = walk(root), {}, 0, [], []
     for e, dx, dy in leaves:
         if e.tag == f"{NS}text":
             ntext += 1
@@ -157,15 +167,61 @@ for p in sorted(pathlib.Path("assets").glob("*.svg")):
             if x0 < 0 or x0 + wid > Wv + .6:
                 bad.append(f"{p.name}: text overflows [{x0:.0f}..{x0+wid:.0f}] of "
                            f"{Wv:.0f}: {s[:34]!r}")
+            # Inside the canvas is not the same as inside the margin. Every plate
+            # sets its type between PAD and X1, and a string that runs past X1 is
+            # still "in bounds" by the test above -- it just reads as touching the
+            # frame. Rasterising the plates turned up three of these in the
+            # blotter, all right-aligned evidence strings that had quietly grown
+            # past the column. Only text is held to the margin; the panel-header
+            # strip and the frame are full-bleed rects on purpose.
+            elif x0 < R.PAD - .6 or x0 + wid > R.X1 + .6:
+                bad.append(f"{p.name}: text breaks the {R.PAD}px margin "
+                           f"[{x0:.0f}..{x0+wid:.0f}] of {R.PAD}..{R.X1:.0f}: "
+                           f"{s[:34]!r}")
             if y > Hv or y - size < -1:
                 bad.append(f"{p.name}: baseline {y} outside 0..{Hv}: {s[:28]!r}")
             rows.setdefault(round(y / 7), []).append((x0, x0 + wid, s))
+            # Ink box, for the border-crossing test below. 0.72em above the
+            # baseline is cap height and 0.18em below is the descender, which is
+            # the box a reader sees rather than the full em square.
+            inks.append((x0, y - .72 * size, x0 + wid, y + .18 * size, s))
         elif e.tag == f"{NS}rect":
             x, y = float(e.get("x")) + dx, float(e.get("y")) + dy
             w, h = float(e.get("width")), float(e.get("height"))
             if x < -.6 or y < -.6 or x + w > Wv + .6 or y + h > Hv + .6:
                 bad.append(f"{p.name}: rect {x:.0f},{y:.0f} {w:.0f}x{h:.0f} "
                            f"escapes {Wv:.0f}x{Hv:.0f}")
+            if e.get("stroke") and e.get("stroke") != "none":
+                boxes.append((x, y, x + w, y + h))
+    # A stroked rect either contains a string or stands clear of it by a visible
+    # margin. Anything in between means a border line is drawn along the glyphs.
+    # This is the one geometric defect the same-baseline check above cannot see --
+    # it compares text against text, and a pill's outline is a rect.
+    #
+    # Rasterising the blotter is what turned it up: the verdict pill and the
+    # evidence string under it were both anchored to X1, the pill's bottom edge
+    # sat at row+27 and the evidence cap height reached row+26.8. Two tenths of a
+    # pixel of clearance in a 0.600em model -- and a plainly visible cyan rule
+    # through "VALIDATION CLEARS" once a real font renders it, because every
+    # fallback in the stack is taller in the cap than the model assumes.
+    #
+    # So the threshold is a design rule, not a rounding allowance: a border and a
+    # glyph get 2px of daylight or the build fails. Written as slack (.5px, say)
+    # this check passes on the very defect it exists to catch -- which it did, on
+    # the first run, before the number was set from the fault instead of from
+    # habit.
+    GAP = 2.0
+    for bx0, by0, bx1, by1 in boxes:
+        for ix0, iy0, ix1, iy1, s in inks:
+            if ix0 >= bx1 - GAP or ix1 <= bx0 + GAP:
+                continue                                   # clear left or right
+            if iy0 >= by1 + GAP or iy1 <= by0 - GAP:
+                continue                                   # clear above or below
+            if bx0 - .6 <= ix0 and ix1 <= bx1 + .6 and by0 - .6 <= iy0 and iy1 <= by1 + .6:
+                continue                                   # contained: fine
+            bad.append(f"{p.name}: border [{bx0:.0f},{by0:.0f}..{bx1:.0f},"
+                       f"{by1:.0f}] comes within {GAP}px of {s[:26]!r} "
+                       f"[{ix0:.0f},{iy0:.1f}..{ix1:.0f},{iy1:.1f}]")
     for _, items in rows.items():
         items.sort()
         for (a0, a1, sa), (b0, b1, sb) in zip(items, items[1:]):
@@ -174,6 +230,26 @@ for p in sorted(pathlib.Path("assets").glob("*.svg")):
                            f"{sb[:24]!r} starts {b0:.0f}")
     print(f"  {p.name:22s} {Wv:.0f}x{Hv:.0f}  texts={ntext:3d}")
 
+# ---- README <-> assets, both directions ------------------------------------
+# This is the check for the failure the reader actually notices. Version one of
+# this page shipped three <img> tags whose sources 404'd, and nothing in the
+# build knew: the plates were fine, the references were not. A broken <picture>
+# on GitHub renders as alt text or as nothing at all, so the page silently loses
+# a panel. Both directions matter -- a reference with no file is a hole in the
+# page, and a file with no reference is a plate nobody will ever see.
+readme = pathlib.Path("README.md").read_text()
+refs = {m for m in re.findall(r'(?:src|srcset)="(assets/[^"]+)"', readme)}
+have = {f"assets/{p.name}" for p in pathlib.Path("assets").glob("*.svg")}
+want = {f"assets/{n}-{th}.svg" for n in R.PLATES for th in R.T}
+for r in sorted(refs - have):
+    bad.append(f"README.md references {r}, which is not in assets/")
+for f in sorted(have - refs):
+    bad.append(f"{f} is rendered but never referenced by README.md")
+for f in sorted(want - have):
+    bad.append(f"render.PLATES declares {f}, which was not rendered")
+print(f"  README.md              {len(refs)} image refs, all present" if not
+      (refs - have) else f"  README.md              {len(refs)} image refs")
+
 print()
 if bad:
     print(f"{len(bad)} PROBLEM(S):")
@@ -181,4 +257,7 @@ if bad:
         print("  -", b)
     sys.exit(1)
 print("clean: AA on every ground, data colours separable, in bounds, no baseline "
-      "collisions, no dangling url(#), no external fetches, nothing under 9px")
+      "collisions, 2px between every border and every glyph,\n"
+      "       no dangling url(#), no external fetches, nothing under 9px, "
+      "reduced-motion escape on every animated plate,\n"
+      "       README and assets agree in both directions")

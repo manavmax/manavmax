@@ -147,16 +147,51 @@ BASE = """
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes blink{0%,48%{opacity:1}52%,100%{opacity:.08}}
 @keyframes tick{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes sweep{0%{opacity:0;transform:translateY(0)}
+ 10%{opacity:.55}90%{opacity:.10}100%{opacity:0;transform:translateY(var(--h))}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .r{opacity:0;animation:rise .55s cubic-bezier(.22,1,.36,1) forwards}
 .f{opacity:0;animation:fade .7s ease-out forwards}
 .bl{animation:blink 1.4s steps(1,end) infinite}
 .k{animation:tick 2.6s ease-in-out infinite}
+.sw{animation:sweep 2.8s cubic-bezier(.33,0,.2,1) .15s forwards;opacity:0}
+.gx{transform-origin:left center;animation:grow .9s cubic-bezier(.22,1,.36,1) forwards}
+/* Motion is decoration here: every plate states the same thing standing still.
+   So when the reader has asked the OS for less of it, they get none -- and they
+   get the finished frame, not the empty one the animation starts from. */
+@media (prefers-reduced-motion:reduce){
+  .r,.f,.gx{opacity:1;animation:none;transform:none}
+  .bl,.k{animation:none;opacity:1}
+  .ln{stroke-dashoffset:0!important;animation:none}
+  .sw{display:none}
+}
 """
 
 
 def frame(t, h) -> str:
     return (rect(0, 0, W, h, fill=t["bg"], rx=2)
             + rect(.5, .5, W - 1, h - 1, stroke=t["edge"], rx=2))
+
+
+def marks(t, h) -> str:
+    """Corner registration marks, drawn last so nothing can cover them.
+
+    Every plate carries the same four, which is what makes seven separate images
+    read as seven panels of one instrument rather than seven unrelated pictures.
+    Cheap, and the only ornament on the page that is purely an ornament.
+    """
+    a, i, o = min(9.0, h / 5), 5, []
+    for cx, cy, sx, sy in ((i, i, 1, 1), (W - i, i, -1, 1),
+                           (i, h - i, 1, -1), (W - i, h - i, -1, -1)):
+        o.append(line(cx, cy, cx + sx * a, cy, stroke=t["fg3"], op=".5"))
+        o.append(line(cx, cy, cx, cy + sy * a, stroke=t["fg3"], op=".5"))
+    return "".join(o)
+
+
+def scan(t, h, colour=None) -> str:
+    """One slow pass of a hairline down the plate, then gone. A CRT tell."""
+    return rect(1, 1, W - 2, 1, fill=colour or t["fg2"], cls="sw",
+                style=f"--h:{h - 3:.0f}px")
 
 
 def panel_head(t, n, title, note, colour) -> str:
@@ -254,7 +289,11 @@ def ident(t, merged: int = 19) -> str:
         o.append(txt(x + 11, 202, val, size=22, fill=c, weight=700, track=.3))
         o.append(txt(x + 11, 214, cap, size=9, fill=t["fg3"], track=.4))
         o.append("</g>")
+    o.append(scan(t, H, t["amber"]))
+    o.append(marks(t, H))
     return "".join(o) + "</svg>"
+
+
 BLOTTER = [
     dict(key="violet", verdict="PEER-REVIEWED",
          work="Regime-aware meta-learning for selective trading",
@@ -280,7 +319,15 @@ def blotter(t) -> str:
     A verdict column that is allowed to say FALSIFIED is the entire point. It is
     the one column a portfolio page never has.
     """
-    RH, Y0 = 44, 48
+    # The verdict column is a reserved band, not just a right edge. Both the pill
+    # and the evidence string used to be anchored to X1, so the pill's bottom
+    # border ran along the cap height of the evidence line 0.2px below it -- which
+    # the layout model called clear and a real font rendered as a rule struck
+    # through "VALIDATION CLEARS". They now occupy separate columns, which is what
+    # the EVIDENCE / VERDICT header said all along. VW is the widest pill
+    # (PEER-REVIEWED, 108px) plus room to breathe.
+    VW, RH, Y0 = 118, 44, 48
+    EVX = X1 - VW - 10
     H = Y0 + RH * len(BLOTTER) + 26
     o = [head(H, "Claim blotter: four projects, each with a verdict"),
          css(BASE), frame(t, H)]
@@ -288,7 +335,7 @@ def blotter(t) -> str:
                         "2 of 4 are not wins  ·  none of it is unaudited",
                         t["amber"]))
     for x, s, a in ((PAD, "#", "start"), (PAD + 34, "WORK / METHOD", "start"),
-                    (X1 - 118, "EVIDENCE", "end"), (X1, "VERDICT", "end")):
+                    (EVX, "EVIDENCE", "end"), (X1, "VERDICT", "end")):
         o.append(txt(x, 42, s, size=9, fill=t["fg3"], track=1.2, anchor=a))
     o.append(line(0, Y0, W, Y0, stroke=t["rule"]))
 
@@ -298,7 +345,7 @@ def blotter(t) -> str:
         o.append(txt(PAD, y + 19, f"{i + 1:02d}", size=11, fill=c, weight=700))
         o.append(txt(PAD + 34, y + 19, r["work"], size=13, fill=t["fg"], weight=700))
         o.append(txt(PAD + 34, y + 34, r["how"], size=9.5, fill=t["fg3"], track=.4))
-        o.append(txt(X1, y + 34, r["evidence"], size=10, fill=t["fg2"],
+        o.append(txt(EVX, y + 34, r["evidence"], size=10, fill=t["fg2"],
                      track=.3, anchor="end"))
         p, pw = pill(0, 0, r["verdict"], c)
         o.append(f'<g transform="translate({X1 - pw:.1f},{y + 6})">{p}</g>')
@@ -309,6 +356,113 @@ def blotter(t) -> str:
     o.append(line(0, H - 26, W, H - 26, stroke=t["rule"]))
     o.append(txt(PAD, H - 10, KEY, size=9, fill=t["fg3"], track=.2, cls="f",
                  style="animation-delay:.6s"))
+    o.append(marks(t, H))
+    return "".join(o) + "</svg>"
+
+
+# Every figure on the right-hand side is from the Regime-Route dashboard. The
+# only derived number is the win/loss split: 38% of 26 orders is 9.88, and 10 is
+# the only whole number that displays as 38% (10/26 = 38.46%, 9/26 = 34.6%), so
+# the plate shows the arithmetic instead of asserting a count I was not given.
+ORDERS, WIN_PCT = 26, 38
+WON = round(ORDERS * WIN_PCT / 100)
+AVG_EDGE, NOTIONAL, TAPE = "-451.96 bps", "$259,069,209", "13M+"
+
+STEPS = [("RECORD", "inputs, route taken, fill"),
+         ("HASH", "sha256 over that record"),
+         ("RECOMPUTE", "from the same public tape")]
+
+
+def receipt(t) -> str:
+    """Panel 2 -- the mechanism on the left, the verdict it returned on the right.
+
+    This is the page's whole argument in one frame: the apparatus works, and it
+    reported that the effect is not there. Two colours, and they disagree.
+    """
+    H, MID = 252, 478
+    o = [head(H, "Proof-carrying execution: the receipts verify, and the edge "
+                 "does not exist"), css(BASE), frame(t, H)]
+    o.append(panel_head(t, 2, "PROOF-CARRYING EXECUTION — REGIME-ROUTE",
+                        "receipt format schematic  ·  hash illustrative  ·  "
+                        "figures from the run", t["rose"]))
+    o.append(line(MID, 40, MID, H - 32, stroke=t["rule"]))
+
+    # ---- left: how a decision is made checkable --------------------------
+    o.append(txt(PAD, 48, "EVERY ROUTING DECISION EMITS A RECEIPT", size=9.5,
+                 fill=t["fg3"], track=1.2))
+    o.append(rect(PAD, 58, MID - PAD - 22, 96, fill=t["panel"], rx=2))
+    o.append(rect(PAD + .5, 58.5, MID - PAD - 23, 95, stroke=t["edge"], rx=2))
+    for i, (verb, what) in enumerate(STEPS):
+        y = 80 + i * 25
+        o.append(f'<g class="r" style="animation-delay:{.16 + i * .1:.2f}s">')
+        o.append(txt(PAD + 14, y, f"{i + 1}", size=11, fill=t["mint"], weight=700))
+        o.append(txt(PAD + 30, y, verb, size=10.5, fill=t["fg"], weight=600,
+                     track=.4))
+        o.append(txt(PAD + 116, y, what, size=10, fill=t["fg3"], track=.2))
+        o.append("</g>")
+    # the three steps converge on one digest -- drawn, not spelled with glyphs
+    bx = MID - 132
+    o.append('<g class="f" style="animation-delay:.5s">')
+    o.append(line(bx - 18, 76, bx - 18, 131, stroke=t["mint"], op=".45"))
+    for i in range(3):
+        o.append(line(bx - 24, 76 + i * 25, bx - 18, 76 + i * 25,
+                      stroke=t["mint"], op=".45"))
+    o.append(line(bx - 18, 104, bx - 6, 104, stroke=t["mint"], op=".45"))
+    o.append(rect(bx - 6, 92, 100, 24, fill=t["mint"], op=t["wash"], rx=2))
+    o.append(rect(bx - 5.5, 92.5, 99, 23, stroke=t["mint"], op=".45", rx=2))
+    o.append(txt(bx + 6, 108, "7f3a9d..c412", size=10.5, fill=t["mint"],
+                 weight=600, track=.2))
+    o.append("</g>")
+    p, _ = pill(PAD, 164, "RECOMPUTES BYTE-FOR-BYTE", t["mint"], size=10, h=20)
+    o.append(f'<g class="f" style="animation-delay:.7s">{p}</g>')
+
+    # ---- right: what it returned when pointed at real tape ---------------
+    o.append(txt(MID + 16, 48, "REPLAYED AGAINST REAL TAPE, PAIRED COUNTERFACTUALS",
+                 size=9.5, fill=t["fg3"], track=1.0))
+    ux, uw = MID + 106, (X1 - 62 - (MID + 106)) / ORDERS
+    for i, (lab, k, v) in enumerate((("BEAT IT", "mint", WON),
+                                     ("DID NOT", "rose", ORDERS - WON))):
+        y, c = 62 + i * 22, t[k]
+        o.append(txt(MID + 16, y + 10, lab, size=9.5, fill=t["fg3"], track=1))
+        o.append(rect(ux, y, uw * ORDERS, 13, fill=t["edge"], op=".35", rx=1))
+        o.append(rect(ux, y, uw * v, 13, fill=c, rx=1, cls="gx",
+                      style=f"animation-delay:{.3 + i * .12:.2f}s"))
+        o.append(txt(X1, y + 10, f"{v}", size=11.5, fill=c, weight=700,
+                     anchor="end"))
+    o.append(txt(MID + 16, 118, f"WIN RATE {WIN_PCT}% OF {ORDERS} ORDERS, SO "
+                                f"{WON} BEAT THE COUNTERFACTUAL", size=9,
+                 fill=t["fg3"], track=.3))
+
+    for i, (lab, val) in enumerate((("AVG EDGE vs COUNTERFACTUAL", AVG_EDGE),
+                                    ("NOTIONAL REPLAYED", NOTIONAL),
+                                    ("ORDER-BOOK ROWS ON THE TAPE", TAPE))):
+        y = 144 + i * 19
+        o.append(f'<g class="f" style="animation-delay:{.55 + i * .08:.2f}s">')
+        o.append(txt(MID + 16, y, lab, size=9.5, fill=t["fg3"], track=.6))
+        o.append(txt(X1, y, val, size=11.5,
+                     fill=t["rose"] if i == 0 else t["fg"], weight=700,
+                     anchor="end"))
+        o.append("</g>")
+
+    o.append(line(PAD, 198, X1, 198, stroke=t["rule"]))
+    o.append('<g class="f" style="animation-delay:.95s">')
+    o.append(txt(PAD, 218, "THE RECEIPTS VERIFY.", size=11.5, fill=t["mint"],
+                 weight=700, track=.3))
+    o.append(txt(PAD + w_mono("THE RECEIPTS VERIFY.   ", 11.5, .3), 218,
+                 "THE EDGE DOES NOT EXIST.", size=11.5, fill=t["rose"],
+                 weight=700, track=.3))
+    o.append(txt(X1, 218, "AND I PUBLISHED THAT, NOT A REFRAMED GOAL", size=10,
+                 fill=t["fg2"], track=.6, anchor="end"))
+    o.append("</g>")
+
+    o.append(line(0, H - 26, W, H - 26, stroke=t["rule"]))
+    o.append(fields(t, PAD, H - 10, [
+        ("METHOD", "PAIRED COUNTERFACTUALS", t["fg2"]),
+        ("VERDICT", "NO ECONOMICALLY MEANINGFUL EDGE", t["rose"]),
+        ("PUBLISHED", "ANYWAY", t["mint"]),
+    ], size=9.5))
+    o.append(scan(t, H, t["rose"]))
+    o.append(marks(t, H))
     return "".join(o) + "</svg>"
 REGIMES = [(0.00, 0.36, "cyan", "TRENDING", True),
            (0.36, 0.66, "rose", "VOLATILE", False),
@@ -331,19 +485,32 @@ def regime_at(f: float):
 
 
 def regime(t) -> str:
-    """Plate 3 -- the paper's rule, drawn: cluster the tape, act only when sure.
+    """Panel 3 -- the paper's rule, drawn: cluster the tape, act only when sure.
 
     Schematic, and labelled as one. The series is a seeded walk, not a backtest;
     the thing being illustrated is the decision rule, which is the contribution.
+
+    Two lanes, because one lane can only assert the rule. The tape is on top and
+    the model's own confidence is underneath with the act/stand-down line drawn
+    across it, so a reader can see *why* the middle stretch is empty instead of
+    taking the caption's word for it.
     """
-    PY0, PY1, H = 72, 152, 200
+    PY0, PY1, H = 76, 140, 228
+    # Zero line, unit height, act threshold. The first pass put the threshold at
+    # .64 with acted confidence in [.74,.96] and abstained in [.30,.56], then
+    # clamped each to within .03 of the line -- so on a 32px lane the two classes
+    # differed by about 2px and the whole lane rasterised as one block of bars.
+    # A lane that cannot be read is worse than no lane, because it looks like a
+    # measurement. The separation is now structural: acted bars are at least 23px
+    # and abstained ones at most 17px, so the line is doing visible work.
+    CZ, CU, THR = 194, 36, .55
     pw = X1 - PAD
     o = [head(H, "Selective signal: the model stands down inside the volatile "
-                 "regime"),
+                 "regime, where its own confidence sits under the line"),
          css(BASE + ".ln{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);"
                     "animation:draw 2.2s ease-out .3s forwards}"),
          frame(t, H)]
-    o.append(panel_head(t, 2, "SELECTIVE SIGNAL — IT STANDS DOWN WHEN UNSURE",
+    o.append(panel_head(t, 3, "SELECTIVE SIGNAL — IT STANDS DOWN WHEN UNSURE",
                         "schematic of the rule, not a backtest", t["cyan"]))
 
     rnd = random.Random(11)
@@ -365,12 +532,28 @@ def regime(t) -> str:
     pts = [(PAD + i * pw / (n - 1), PY1 - (y - lo) / (hi - lo) * (PY1 - PY0))
            for i, y in enumerate(ys)]
 
+    # Confidence lane. Smoothed so it reads as a signal rather than as hash, then
+    # clamped to the correct side of the threshold: the bar's colour and the
+    # footer's count both come from `act`, so the drawing cannot disagree with
+    # the number printed under it. Same reason the rug samples every bar.
+    rc, conf, prev = random.Random(29), [], .82
+    for i in range(n):
+        _, _, act = regime_at(i / (n - 1))
+        prev += ((rc.uniform(.80, .98) if act else rc.uniform(.14, .36)) - prev) * .5
+        conf.append(max(prev, THR + .08) if act else min(prev, THR - .10))
+
+    # Gridlines first, so the regime tint lies over them and they read as ruling
+    # on paper rather than as marks on top of the picture.
+    for i in range(4):
+        gy = PY0 + i * (PY1 - PY0) / 3
+        o.append(line(PAD, gy, X1, gy, stroke=t["edge"]))
+
     for lo_f, hi_f, key, nm, act in REGIMES:
         x0, x1 = PAD + lo_f * pw, PAD + hi_f * pw
         c = t[key]
-        o.append(rect(x0, 32, x1 - x0, 124, fill=c, op=t["band"]))
+        o.append(rect(x0, 32, x1 - x0, 164, fill=c, op=t["band"]))
         if lo_f:
-            o.append(line(x0, 32, x0, 156, stroke=c, op=".40",
+            o.append(line(x0, 32, x0, 196, stroke=c, op=".40",
                           style="stroke-dasharray:3 3"))
         p, pwid = pill(x0 + 9, 36, nm, c, size=10, h=18, pad=8, track=.8)
         o.append(f'<g class="f" style="animation-delay:.15s">{p}</g>')
@@ -383,20 +566,6 @@ def regime(t) -> str:
     o.append(f'<path d="{d}" fill="none" stroke="{t["fg2"]}" stroke-width="1.6" '
              f'stroke-linejoin="round" class="ln" style="--l:{L:.0f}"/>')
 
-    # ---- decision rug: one mark per bar, so the stood-down block is visible --
-    # Step 1, not 2. When it sampled every other bar the footer count described
-    # the rug rather than the series, so the plate stated 46 of 66 for a 132-bar
-    # picture. One mark per bar makes the caption true by construction.
-    acted = 0
-    for i in range(n):
-        key, _, act = regime_at(i / (n - 1))
-        x = PAD + i * pw / (n - 1)
-        if act:
-            acted += 1
-            o.append(rect(x, 158, 1.6, 8, fill=t[key], op=".85"))
-        else:
-            o.append(rect(x, 162, 1.6, 3, fill=t["fg3"], op=".55"))
-
     for i in range(6, n, 13):                       # markers only where it acts
         key, _, act = regime_at(i / (n - 1))
         if not act:
@@ -407,14 +576,109 @@ def regime(t) -> str:
                  f'stroke="{c}" stroke-width="1.8" class="f" '
                  f'style="animation-delay:{.9 + i * .008:.2f}s"/>')
 
-    o.append('<g class="f" style="animation-delay:1.5s">')
-    o.append(txt(PAD, 186, "MARKER = POSITION TAKEN   ·   FAINT TICK = STOOD DOWN",
-                 size=9.5, fill=t["fg3"], track=.8))
-    o.append(txt(X1, 186, f"ACTED ON {acted} OF {n} BARS  ·  ABSTAINED "
-                          f"{n - acted}  ({(n - acted) * 100 // n}%)",
-                 size=9.5, fill=t["fg2"], track=.8, anchor="end"))
+    acted, bw = 0, pw / (n - 1)
+    o.append('<g class="f" style="animation-delay:1.15s">')
+    for i in range(n):
+        _, _, act = regime_at(i / (n - 1))
+        acted += act
+        h = conf[i] * CU
+        o.append(rect(PAD + i * bw, CZ - h, bw * .62, h,
+                      fill=t["mint"] if act else t["rose"], op=".8" if act else ".6"))
     o.append("</g>")
+    o.append(line(PAD, CZ, X1, CZ, stroke=t["edge"]))
+    # Amber, because on this page amber is the colour of a rule or a gate, and
+    # this line is the rule. In fg2 it disappeared into the bars it crosses.
+    o.append(line(PAD, CZ - THR * CU, X1, CZ - THR * CU, stroke=t["amber"],
+                  op=".9", style="stroke-dasharray:4 4"))
+
+    o.append('<g class="f" style="animation-delay:1.5s">')
+    o.append(txt(PAD, 154, "CIRCLE = POSITION TAKEN", size=9.5, fill=t["fg3"],
+                 track=.8))
+    o.append(txt(X1, 154, "BAR = MODEL CONFIDENCE   ·   DASHED LINE = MINIMUM "
+                          "TO ACT", size=9.5, fill=t["fg3"], track=.8,
+                 anchor="end"))
+    o.append("</g>")
+    o.append(line(0, H - 26, W, H - 26, stroke=t["rule"]))
+    o.append(fields(t, PAD, H - 10, [
+        ("BARS", f"{n}", t["fg"]),
+        ("ACTED", f"{acted}", t["mint"]),
+        ("STOOD DOWN", f"{n - acted}  ({(n - acted) * 100 // n}%)", t["rose"]),
+        ("RULE", "ABSTAIN RATHER THAN GUESS", t["cyan"]),
+    ], size=9.5))
+    o.append(scan(t, H, t["cyan"]))
+    o.append(marks(t, H))
     return "".join(o) + "</svg>"
+
+
+# The five stages are the compiler's own vocabulary, one box each, in the order a
+# kernel passes through them. It is a schematic of the path, not a module map --
+# the panel note says so, because I have not read the source tree to draw one.
+FORGE = [("PARSE", "graph IR", "cyan"),
+         ("SHAPE", "specialise", "cyan"),
+         ("LOWER", "kernel plan", "violet"),
+         ("EMIT", "WGSL source", "violet"),
+         ("DISPATCH", "run on GPU", "mint")]
+CLAIMS = [("NO PYTORCH", "rose"), ("NO CUDA", "rose"), ("5/5 CTEST", "mint")]
+
+
+def forge(t) -> str:
+    """Panel 4 -- Tensor-Forge's lowering path, five stages and nothing hidden.
+
+    The interesting claim is not that it runs, it is that no stage is a black
+    box: the thing lowers and shape-specialises itself with no framework under
+    it, so the boxes are the whole of it, not the tip of somebody else's stack.
+    """
+    H, BW, GAP = 172, (X1 - PAD - 4 * 14) / 5, 14
+    o = [head(H, "Tensor-Forge: a from-scratch JIT tensor compiler, five "
+                 "inspectable lowering stages, no PyTorch and no CUDA"),
+         css(BASE), frame(t, H)]
+    o.append(panel_head(t, 4, "THE COMPILER — TENSOR-FORGE",
+                        "schematic of the lowering path, not a module map",
+                        t["mint"]))
+    o.append(txt(PAD, 48, "A TENSOR GRAPH GOES IN THE LEFT AND LEAVES AS GPU "
+                          "WORK, WITH EVERY STAGE READABLE ON THE WAY THROUGH",
+                 size=9.5, fill=t["fg3"], track=.6))
+
+    for i, (name, emits, key) in enumerate(FORGE):
+        x, c = PAD + i * (BW + GAP), t[key]
+        o.append(f'<g class="r" style="animation-delay:{.2 + i * .09:.2f}s">')
+        o.append(rect(x, 60, BW, 52, fill=c, op=t["band"], rx=2))
+        o.append(rect(x + .5, 60.5, BW - 1, 51, stroke=c, op=".38", rx=2))
+        o.append(rect(x, 60, 2.5, 52, fill=c))          # lane spine, left edge
+        o.append(txt(x + 12, 74, f"0{i + 1}", size=9, fill=t["fg3"], track=1))
+        o.append(txt(x + 12, 92, name, size=11.5, fill=c, weight=700, track=.9))
+        o.append(txt(x + 12, 105, emits, size=9.5, fill=t["fg2"], track=.2))
+        o.append("</g>")
+        if i < len(FORGE) - 1:                          # hairline chevron, ->
+            mx = x + BW + GAP / 2
+            o.append(f'<g class="f" style="animation-delay:{.5 + i * .09:.2f}s">')
+            o.append(line(x + BW + 2, 86, mx + 3, 86, stroke=t["fg3"], op=".7"))
+            o.append(line(mx, 83, mx + 3, 86, stroke=t["fg3"], op=".7"))
+            o.append(line(mx, 89, mx + 3, 86, stroke=t["fg3"], op=".7"))
+            o.append("</g>")
+
+    cx = PAD
+    for i, (label, key) in enumerate(CLAIMS):
+        p, pw = pill(cx, 122, label, t[key], size=10, h=20)
+        o.append(f'<g class="f" style="animation-delay:{.8 + i * .1:.2f}s">'
+                 f"{p}</g>")
+        cx += pw + 8
+    o.append(txt(X1, 136, "EVERY STAGE IS INSPECTABLE", size=10.5,
+                 fill=t["fg2"], track=.8, anchor="end", cls="f",
+                 style="animation-delay:1.1s"))
+
+    o.append(line(0, H - 26, W, H - 26, stroke=t["rule"]))
+    o.append(fields(t, PAD, H - 10, [
+        ("WRITTEN IN", "C++20", t["cyan"]),
+        ("TARGET", "WGSL", t["violet"]),
+        ("CONSOLE", "NEXT.JS", t["amber"]),
+        ("SUITES", "5/5 PASSING", t["mint"]),
+        ("CI", "FULL", t["mint"]),
+    ], size=9.5))
+    o.append(marks(t, H))
+    return "".join(o) + "</svg>"
+
+
 STACK = [("SYSTEMS", "cyan", ["C++20", "Python", "TypeScript", "JavaScript"],
           "c++20 in regime-route and tensor-forge · python in bitcoin-alpha"),
          ("LEARNING", "violet", ["PyTorch", "TensorFlow", "scikit-learn",
@@ -434,7 +698,7 @@ def stack(t) -> str:
     H = Y0 + RH * len(STACK) + 14
     o = [head(H, "Apparatus: systems, learning, state, surface, shipping"),
          css(BASE), frame(t, H)]
-    o.append(panel_head(t, 3, "APPARATUS — WHAT I HAVE ACTUALLY SHIPPED WITH",
+    o.append(panel_head(t, 6, "APPARATUS — WHAT I HAVE ACTUALLY SHIPPED WITH",
                         "grouped by what it is for, not by badge count",
                         t["violet"]))
     for i, (lab, key, items, where) in enumerate(STACK):
@@ -452,6 +716,7 @@ def stack(t) -> str:
         if i < len(STACK) - 1:
             o.append(line(PAD, y + RH, X1, y + RH, stroke=t["rule"]))
         o.append("</g>")
+    o.append(marks(t, H))
     return "".join(o) + "</svg>"
 
 
@@ -477,11 +742,14 @@ def keys(t) -> str:
         o.append(txt(x + 8.5, 21, fk, size=9, fill=t["amber"], weight=700, track=.4))
         o.append(txt(x + 29, 21, lab, size=10, fill=t["fg2"], track=.3))
         o.append("</g>")
+    o.append(marks(t, H))
     return "".join(o) + "</svg>"
 
 
-PLATES = {"ident": ident, "blotter": blotter, "regime": regime, "stack": stack,
-          "keys": keys}
+# Insertion order is page order, and build/verify.py checks that every one of
+# these is referenced by README.md and that README.md references nothing else.
+PLATES = {"ident": ident, "blotter": blotter, "receipt": receipt,
+          "regime": regime, "forge": forge, "stack": stack, "keys": keys}
 
 
 def main() -> int:
