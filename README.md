@@ -64,11 +64,11 @@ an opinion. **Schematic, not backtest output** — the shape is illustrative, th
 <!-- upstream:start -->
 | Project | Maintained by | Where I worked | Merged |
 |:--|:--|:--|--:|
-| **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** <!-- n:google-gemini/gemini-cli=8 --> | Google | `cli` `core` `extensions` `devtools` | `8` |
-| **[Oppia](https://github.com/oppia/oppia)** <!-- n:oppia/oppia=10 --> | Oppia Foundation | LEAP team — led a Redis infrastructure upgrade | `10` |
+| **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** <!-- n:google-gemini/gemini-cli=2 --> | Google | `cli` `core` `extensions` `devtools` | `2` |
+| **[Oppia](https://github.com/oppia/oppia)** <!-- n:oppia/oppia=2 --> | Oppia Foundation | LEAP team — led a Redis infrastructure upgrade | `2` |
 | **[OpenMetadata](https://github.com/open-metadata/OpenMetadata)** <!-- n:open-metadata/OpenMetadata=1 --> | Collate | metadata platform | `1` |
 
-<samp><b>19</b> pull requests merged by maintainers who owe me nothing · counted by the GitHub Search API on <code>2026-09-05</code>, not by me</samp>
+<samp><b>5</b> pull requests merged by maintainers who owe me nothing · counted by the GitHub Search API on <code>2026-09-05</code>, not by me</samp>
 <!-- upstream:end -->
 
 The Oppia one is the one I would point at. The Redis upgrade was unglamorous infrastructure work

@@ -62,18 +62,18 @@
 <line x1="560.0" y1="274.0" x2="1040.0" y2="274.0" stroke="url(#ul)" stroke-width="3" stroke-linecap="round" style="stroke-dasharray:480;stroke-dashoffset:480;animation:draw 1.1s .5s cubic-bezier(.22,1,.36,1) forwards"/>
 <text x="800" y="326" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="18" letter-spacing="1.8" dx="-0.9" class="rise" style="animation-delay:.42s"><tspan fill="#7C3AED">ML RESEARCH</tspan><tspan fill="#94A3B8">   ·   </tspan><tspan fill="#0891B2">SYSTEMS &amp; COMPILERS</tspan><tspan fill="#94A3B8">   ·   </tspan><tspan fill="#DB2777">MARKET MICROSTRUCTURE</tspan></text>
 <g class="rise" style="animation-delay:0.60s">
-<rect x="402.6" y="366.0" width="258.2" height="46.0" fill="#7C3AED" rx="23" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".45"/>
-<text x="420.6" y="396.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#7C3AED" font-weight="750">01</text>
-<text x="455.6" y="395.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#475569" letter-spacing="0.9">IEEE PAPER, FIRST AUTHOR</text>
+<rect x="408.6" y="366.0" width="258.2" height="46.0" fill="#7C3AED" rx="23" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".45"/>
+<text x="426.6" y="396.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#7C3AED" font-weight="750">01</text>
+<text x="461.6" y="395.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#475569" letter-spacing="0.9">IEEE PAPER, FIRST AUTHOR</text>
 </g>
 <g class="rise" style="animation-delay:0.71s">
-<rect x="682.8" y="366.0" width="219.2" height="46.0" fill="#059669" rx="23" stroke="#059669" stroke-width="1" fill-opacity=".07" stroke-opacity=".45"/>
-<text x="700.8" y="396.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#059669" font-weight="750">19</text>
-<text x="735.7" y="395.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#475569" letter-spacing="0.9">UPSTREAM PRs MERGED</text>
+<rect x="688.8" y="366.0" width="207.2" height="46.0" fill="#059669" rx="23" stroke="#059669" stroke-width="1" fill-opacity=".07" stroke-opacity=".45"/>
+<text x="706.8" y="396.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#059669" font-weight="750">5</text>
+<text x="729.7" y="395.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#475569" letter-spacing="0.9">UPSTREAM PRs MERGED</text>
 </g>
 <g class="rise" style="animation-delay:0.82s">
-<rect x="923.9" y="366.0" width="273.5" height="46.0" fill="#0891B2" rx="23" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".45"/>
-<text x="941.9" y="396.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#0891B2" font-weight="750">13M+</text>
-<text x="1007.8" y="395.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#475569" letter-spacing="0.9">ORDER-BOOK ROWS TESTED</text>
+<rect x="917.9" y="366.0" width="273.5" height="46.0" fill="#0891B2" rx="23" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".45"/>
+<text x="935.9" y="396.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="22" fill="#0891B2" font-weight="750">13M+</text>
+<text x="1001.8" y="395.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#475569" letter-spacing="0.9">ORDER-BOOK ROWS TESTED</text>
 </g>
 </g></svg>
