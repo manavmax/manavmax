@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rewrite the live regions of README.md, then regenerate the graphics.
+"""Rewrite the live regions of README.md, regenerate the graphics, then check them.
 
 Two regions are owned by this script, each delimited by a matched pair of HTML
 comments so the rest of the file is never touched:
@@ -11,9 +11,18 @@ The merged-PR counts come from the GitHub Search API, which returns a
 `total_count` for a query -- so one request per repository answers the question
 with no pagination at all.
 
-Safety rail: if the API fails, rate-limits, or answers 0 where we previously had
-a positive number, we keep the previous number and say so on stderr. A profile
-that silently claims 0 merged PRs because of an HTTP 403 is worse than a stale one.
+Safety rail: the count for a repository is never allowed to go DOWN. Merged PRs
+do not un-merge, so a decrease means the API answered wrong, not that history
+changed -- an HTTP 403, a rate-limit, or a token that cannot see the repository.
+The first version of this rail only caught `None` and an exact 0, so a partial
+answer that undercounted sailed straight through and the published page quietly
+lost merges. Any decrease now keeps the previous number and shouts on stderr.
+
+If the counts read low in CI, the likely cause is the token: `secrets.GITHUB_TOKEN`
+is scoped to THIS repository, and the Search API can answer conservatively for
+repositories it has no read context on. A user PAT with `public_repo`, stored as a
+secret and passed as GH_TOKEN, is the fix. Nothing here can tell which figure is
+correct on its own; it can only refuse to publish the smaller one.
 """
 from __future__ import annotations
 
@@ -22,6 +31,7 @@ import json
 import os
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 import urllib.error
@@ -29,7 +39,6 @@ import urllib.parse
 import urllib.request
 
 USER = "manavmax"
-EPOCH = dt.date(2026, 2, 3)          # NO. 001 -- first issue of this masthead
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 
@@ -95,16 +104,25 @@ def main() -> int:
     print("counting merged pull requests upstream")
     counts, degraded = {}, []
     for repo, *_ in UPSTREAM:
-        n = merged_prs(repo)
-        if n is None or (n == 0 and prior.get(repo, 0) > 0):
-            n = prior.get(repo, 0)
-            degraded.append(repo)
+        n, was = merged_prs(repo), prior.get(repo, 0)
+        if n is None:
+            n, why = was, "no answer"
+        elif n < was:
+            n, why = was, f"API said {n}, previously {was}"
+        else:
+            why = ""
+        if why:
+            degraded.append((repo, why))
         counts[repo] = n
-        print(f"  {repo:32s} {n:3d}{'  (kept previous)' if repo in degraded else ''}")
+        print(f"  {repo:32s} {n:3d}{'  (kept previous: ' + why + ')' if why else ''}")
 
     total = sum(counts.values())
+    for repo, why in degraded:
+        print(f"  ! {repo}: kept previous count -- {why}", file=sys.stderr)
     if degraded:
-        print(f"  ! degraded: kept previous counts for {', '.join(degraded)}", file=sys.stderr)
+        print("  ! a merged PR cannot un-merge. If this persists, pass a user PAT "
+              "with public_repo scope as GH_TOKEN instead of secrets.GITHUB_TOKEN.",
+              file=sys.stderr)
 
     # --- region 1: the upstream table -------------------------------------
     rows = [
@@ -116,22 +134,37 @@ def main() -> int:
           for repo, name, who, where in UPSTREAM),
         "",
         f"<samp><b>{total}</b> pull requests merged by maintainers who owe me nothing · "
-        f"counted by the GitHub Search API on <code>{today:%Y-%m-%d}</code>, not by me</samp>",
+        f"counted on <code>{today:%Y-%m-%d}</code></samp>",
     ]
     md = replace(md, "upstream", "\n".join(rows) + "\n")
 
-    # --- region 2: the dateline -------------------------------------------
-    issue = (today - EPOCH).days + 1
-    md = replace(md, "dateline",
-                 f"`VOL. I` · `NO. {issue:03d}` · `{today:%d %B %Y}`".upper()
-                 + " · `BUILT BY GITHUB ACTIONS`")
-
-    README.write_text(md, encoding="utf-8")
-    print(f"README.md written  ·  issue {issue:03d}  ·  {total} merged upstream")
-
-    # --- regenerate the plates with the live number baked into the hero ----
+    # --- regenerate the plates with the live number baked into the masthead ---
     subprocess.run([sys.executable, str(ROOT / "build" / "render.py"),
                     "--out", str(ROOT / "assets"), "--merged", str(total)], check=True)
+    sys.path.insert(0, str(ROOT / "build"))
+    # From source, not from a .pyc: CPython accepts a cache whose recorded
+    # (mtime_seconds, size) match the source, and swapping one hex literal for
+    # another changes neither. See the same guard at the top of build/verify.py.
+    sys.dont_write_bytecode = True
+    shutil.rmtree(ROOT / "build" / "__pycache__", ignore_errors=True)
+    import render                       # for the plate count only; not to draw
+    plates = len(render.PLATES) * len(render.T)
+
+    # --- region 2: the dateline -------------------------------------------
+    # <code> rather than backticks: this block sits inside <div align="center">,
+    # where GitHub does not run inline markdown, so backticks render as literal
+    # quote marks. That shipped once. It is why these are explicit tags.
+    md = replace(md, "dateline",
+                 f"<code>SESSION {today:%Y-%m-%d}</code> · <code>PLATES {plates}</code>"
+                 " · <code>RENDER build/render.py</code>"
+                 " · <code>CHECK build/verify.py</code> · <code>JS 0</code>")
+
+    README.write_text(md, encoding="utf-8")
+    print(f"README.md written  ·  {plates} plates  ·  {total} merged upstream")
+
+    # --- refuse to publish a page that does not pass the geometry check ------
+    subprocess.run([sys.executable, str(ROOT / "build" / "verify.py")],
+                   check=True, cwd=ROOT)
     return 0
 
 

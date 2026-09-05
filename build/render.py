@@ -1,439 +1,511 @@
 #!/usr/bin/env python3
-"""Generate every graphic on the profile as a self-hosted animated SVG.
+"""Draw the profile plates as self-hosted animated SVG. Standard library only.
 
-Standard library only. No matplotlib, no Pillow, no external widget service.
+SCALE -- what version one got wrong. GitHub's README column is about 880 CSS px.
+The plates were drawn on a 1600px canvas and embedded at width=100%, so every
+12px label rendered at 6.6px and the page read as grey mush. Everything here is
+drawn at W=880, one logical unit per rendered pixel, so a 12px label is 12px. It
+stays sharp above 880 because it is vector.
 
-Why hand-written SVG: GitHub serves .svg from raw.githubusercontent.com with
+ENVELOPE -- GitHub serves .svg from raw.githubusercontent.com under
     Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
-so inline CSS (including @keyframes) is explicitly allowed, SMIL is allowed,
-and JavaScript plus external webfonts are blocked. That is the whole design
-envelope: animate with CSS, never rely on a font being downloadable.
+Inline CSS, @keyframes included, is allowed. JavaScript, webfonts and every
+external subresource are not. CSS animation rather than SMIL, because SMIL
+inside <img> does not begin until page load has finished.
+
+LANGUAGE -- lifted from the two terminals in this repo's orbit: ALPHABIT and the
+RegimeRoute blotter. Near-black ground, amber primary, mint positive, rose
+negative. Monospace for everything, square corners, hairline rules, numbered
+panel headers, a status line, an F-key bar. Colour carries data and nothing
+else: no gradient fills, no blur, no glow. A profile page for someone who reads
+terminals should look like one.
 """
 from __future__ import annotations
-import argparse, math, pathlib, random, xml.sax.saxutils as sx
 
-SANS = "Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"
-MONO = "'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+import argparse
+import math
+import pathlib
+import random
 
+W = 880                      # == GitHub's content column. Do not raise this.
+PAD = 20
+X1 = W - PAD
+
+MONO = "'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,'Courier New',monospace"
+
+# Two properties hold across this table, and build/verify.py fails the build on
+# either one breaking.
+#
+# 1. CONTRAST. Every foreground clears WCAG AA 4.5:1 against all three grounds
+#    (bg, panel, strip). fg3 carries the 9px annotations -- the smallest type on
+#    the page -- and the first pass had it at 3.30:1 on the strip: the least
+#    readable colour on the least readable text. Nothing sits closer to the line
+#    than 4.77 now, because a value that only just clears it is one rounding away
+#    from not clearing it.
+#
+# 2. SEPARABILITY. The page's argument is that colour carries data, so two data
+#    colours that look alike break it silently. Every semantic ink is >=40 Lab dE
+#    from every other and >=44 from every neutral. Light cyan used to be #0A78A0,
+#    which is 25 dE from fg2 -- and the KPI tile puts a 9.5px fg2 label directly
+#    above its 22px semantic value, so that one tile read as a grey label over a
+#    slightly-bluer-grey number while the other three read as label over colour.
+#    #0069BF is 45 dE out and matches the other three in lightness besides.
 T = {
     "dark": dict(
-        bg="#0B1120", bg2="#131C31", panel="#0F1729", edge="#1E293B",
-        fg="#F1F5F9", fg2="#94A3B8", fg3="#5B6B85",
-        violet="#A78BFA", emerald="#34D399", amber="#FBBF24",
-        cyan="#22D3EE", pink="#F472B6", aurora=".55", band=".085", wash=".10",
+        bg="#07090C", panel="#0D1014", strip="#141922", edge="#232A33",
+        rule="#1A2029", fg="#E8EDF2", fg2="#98A2AE", fg3="#7B8896",
+        amber="#FFA92B", mint="#4ADE80", rose="#FF6B6B", cyan="#56D4E8",
+        violet="#B08CFF", wash=".10", band=".06",
     ),
     "light": dict(
-        bg="#FFFFFF", bg2="#F8FAFC", panel="#FFFFFF", edge="#E2E8F0",
-        fg="#0F172A", fg2="#475569", fg3="#94A3B8",
-        violet="#7C3AED", emerald="#059669", amber="#D97706",
-        cyan="#0891B2", pink="#DB2777", aurora=".28", band=".07", wash=".07",
+        bg="#FFFFFF", panel="#FBFCFD", strip="#F1F4F8", edge="#D3DBE4",
+        rule="#E8EDF3", fg="#0A0F14", fg2="#4C5865", fg3="#636C75",
+        amber="#95600A", mint="#007D3A", rose="#C0324E", cyan="#0069BF",
+        violet="#6A43C4", wash=".085", band=".07",
     ),
 }
+def esc(s: str) -> str:
+    return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;"))
 
-# ---------------------------------------------------------------- primitives
-def esc(s): return sx.escape(str(s))
-def w_mono(s, size): return len(s) * 0.600 * size
-def w_sans(s, size):
-    wide, narrow = set("MWmw@"), set("iljtfIr.,:;'|! ")
-    return sum(0.86 if c in wide else 0.30 if c in narrow else 0.545 for c in s) * size
 
-def txt(s, x, y, fam, size, fill, *, anchor="start", track=0.0, weight=None,
-        opacity=None, cls=None, style=None):
-    a = [f'x="{x:.1f}"', f'y="{y:.1f}"', f'font-family="{esc(fam)}"',
-         f'font-size="{size}"', f'fill="{fill}"']
+def w_mono(s: str, size: float, track: float = 0.0) -> float:
+    """Advance width. JetBrains Mono and every fallback here are 0.600em."""
+    return len(s) * (0.600 * size + track)
+
+
+def txt(x, y, s, *, size=11.5, fill="#fff", weight=400, track=0, anchor="start",
+        cls=None, style=None, op=None) -> str:
+    a = [f'x="{x:.1f}"', f'y="{y:.1f}"', f'font-size="{size}"',
+         f'font-family="{MONO}"', f'fill="{fill}"']
+    if weight != 400:
+        a.append(f'font-weight="{weight}"')
+    if track:
+        a.append(f'letter-spacing="{track}"')
     if anchor != "start":
         a.append(f'text-anchor="{anchor}"')
-        if track: a.append(f'dx="{-track/2:.2f}"')
-    if track:   a.append(f'letter-spacing="{track}"')
-    if weight:  a.append(f'font-weight="{weight}"')
-    if opacity is not None: a.append(f'fill-opacity="{opacity}"')
-    if cls:     a.append(f'class="{cls}"')
-    if style:   a.append(f'style="{style}"')
+    if op is not None:
+        a.append(f'opacity="{op}"')
+    if cls:
+        a.append(f'class="{cls}"')
+    if style:
+        a.append(f'style="{style}"')
     return f'<text {" ".join(a)}>{esc(s)}</text>'
 
-def rect(x, y, w, h, fill, *, rx=0, stroke=None, sw=1, fo=None, so=None, cls=None, style=None):
-    a = [f'x="{x:.1f}"', f'y="{y:.1f}"', f'width="{w:.1f}"', f'height="{h:.1f}"', f'fill="{fill}"']
-    if rx:     a.append(f'rx="{rx}"')
-    if stroke: a += [f'stroke="{stroke}"', f'stroke-width="{sw}"']
-    if fo is not None: a.append(f'fill-opacity="{fo}"')
-    if so is not None: a.append(f'stroke-opacity="{so}"')
-    if cls:    a.append(f'class="{cls}"')
-    if style:  a.append(f'style="{style}"')
+
+def rect(x, y, w, h, *, fill="none", stroke=None, rx=0, op=None, cls=None,
+         style=None, sw=1) -> str:
+    a = [f'x="{x:.1f}"', f'y="{y:.1f}"', f'width="{w:.1f}"', f'height="{h:.1f}"',
+         f'fill="{fill}"']
+    if rx:
+        a.append(f'rx="{rx}"')
+    if stroke:
+        a += [f'stroke="{stroke}"', f'stroke-width="{sw}"']
+    if op is not None:
+        a.append(f'opacity="{op}"')
+    if cls:
+        a.append(f'class="{cls}"')
+    if style:
+        a.append(f'style="{style}"')
     return f'<rect {" ".join(a)}/>'
 
-def line(x1, y1, x2, y2, stroke, sw=1, *, o=None, cap=None, cls=None, style=None):
+
+def line(x1, y1, x2, y2, *, stroke, sw=1, op=None, cls=None, style=None) -> str:
     a = [f'x1="{x1:.1f}"', f'y1="{y1:.1f}"', f'x2="{x2:.1f}"', f'y2="{y2:.1f}"',
          f'stroke="{stroke}"', f'stroke-width="{sw}"']
-    if o is not None: a.append(f'stroke-opacity="{o}"')
-    if cap:  a.append(f'stroke-linecap="{cap}"')
-    if cls:  a.append(f'class="{cls}"')
-    if style: a.append(f'style="{style}"')
+    for k, v in (("opacity", op), ("class", cls), ("style", style)):
+        if v is not None:
+            a.append(f'{k}="{v}"')
     return f'<line {" ".join(a)}/>'
+def pill(x, y, label, colour, *, size=10.5, h=21, pad=8, track=.8,
+         cls=None, style=None) -> tuple[str, float]:
+    """Flat square-cornered tag: the BUY / TRENDING / FALSIFIED chip."""
+    w = w_mono(label, size, track) + pad * 2
+    g = (rect(x, y, w, h, fill=colour, op=".12", rx=2)
+         + rect(x + .5, y + .5, w - 1, h - 1, stroke=colour, op=".60", rx=2)
+         + txt(x + pad, y + h / 2 + size * .36, label, size=size, fill=colour,
+               weight=600, track=track))
+    if cls:
+        g = f'<g class="{cls}"{f" style={style!r}" if style else ""}>{g}</g>'
+    return g, w
 
-def circ(cx, cy, r, fill, *, o=None, stroke=None, sw=1, cls=None, style=None):
-    a = [f'cx="{cx:.1f}"', f'cy="{cy:.1f}"', f'r="{r}"', f'fill="{fill}"']
-    if o is not None: a.append(f'fill-opacity="{o}"')
-    if stroke: a += [f'stroke="{stroke}"', f'stroke-width="{sw}"']
-    if cls:  a.append(f'class="{cls}"')
-    if style: a.append(f'style="{style}"')
-    return f'<circle {" ".join(a)}/>'
 
-def head(w, h, title):
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
-            f'viewBox="0 0 {w} {h}" role="img" aria-label="{esc(title)}">'
-            f'<title>{esc(title)}</title>')
+def head(h: int, title: str) -> str:
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{h}" '
+            f'viewBox="0 0 {W} {h}" role="img" aria-label="{esc(title)}">'
+            f"<title>{esc(title)}</title>")
 
-def css(body):
-    return "<style>/*<![CDATA[*/" + body + "/*]]>*/</style>"
 
-# Shared keyframes. Entrance animations use `forwards` so the page settles
-# instead of looping in the reader's peripheral vision.
-BASE_CSS = """
+def css(body: str) -> str:
+    return f"<style>/*<![CDATA[*/{body}/*]]>*/</style>"
+
+
+BASE = """
 *{transform-box:fill-box;transform-origin:center}
-@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes draw{to{stroke-dashoffset:0}}
-@keyframes halo{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
-.rise{opacity:0;animation:rise .75s cubic-bezier(.22,1,.36,1) forwards}
-.fade{opacity:0;animation:fade .9s ease-out forwards}
-.halo{animation:halo 2.6s ease-out infinite}
+@keyframes blink{0%,48%{opacity:1}52%,100%{opacity:.08}}
+@keyframes tick{0%,100%{opacity:.3}50%{opacity:1}}
+.r{opacity:0;animation:rise .55s cubic-bezier(.22,1,.36,1) forwards}
+.f{opacity:0;animation:fade .7s ease-out forwards}
+.bl{animation:blink 1.4s steps(1,end) infinite}
+.k{animation:tick 2.6s ease-in-out infinite}
 """
 
-# ------------------------------------------------------------------- 1. HERO
+
+def frame(t, h) -> str:
+    return (rect(0, 0, W, h, fill=t["bg"], rx=2)
+            + rect(.5, .5, W - 1, h - 1, stroke=t["edge"], rx=2))
+
+
+def panel_head(t, n, title, note, colour) -> str:
+    """`3 VITALS -- CHAMPION` ... right-aligned dim annotation. ALPHABIT's grammar."""
+    return "".join([
+        rect(0, 0, W, 28, fill=t["strip"]),
+        rect(PAD, 7, 15, 15, fill=colour, rx=2),
+        txt(PAD + 7.5, 18, str(n), size=10, fill=t["bg"], weight=700,
+            anchor="middle"),
+        txt(PAD + 24, 18, title, size=10.5, fill=t["fg"], weight=700, track=1.3),
+        txt(X1, 18, note, size=9.5, fill=t["fg3"], track=.4, anchor="end"),
+        line(0, 28, W, 28, stroke=t["edge"]),
+    ])
+
+
+def fields(t, x, y, pairs, *, size=10.5, hi=None) -> str:
+    """`FOCUS CHAMPION | SHARPE 0.78 | ...` -- dim key, bright value, thin bars."""
+    o, cx = [], x
+    for i, (k, v, c) in enumerate(pairs):
+        if i:
+            o.append(txt(cx, y, "|", size=size, fill=t["edge"]))
+            cx += w_mono("|  ", size)
+        o.append(txt(cx, y, k, size=size, fill=t["fg3"], track=.5))
+        cx += w_mono(k + " ", size, .5)
+        o.append(txt(cx, y, v, size=size, fill=c or hi or t["fg"], weight=600))
+        cx += w_mono(v + "  ", size)
+    return "".join(o)
 NAME = "MANAV SHARMA"
-ROLE = [("ML RESEARCH", "violet"), ("SYSTEMS & COMPILERS", "cyan"),
-        ("MARKET MICROSTRUCTURE", "pink")]
+LINE = "I build learning systems, then build the harness that tries to break them."
+BEAT = ("// UNSUPERVISED REGIME CLUSTERING  ·  META-LEARNED ABSTENTION  ·  "
+        "PROOF-CARRYING EXECUTION")
+MENU = "PAPER   ROUTE   FORGE   ALPHA   OSS   CONTACT"
 
-def hero(th: str, merged: int) -> str:
-    c, W, H = T[th], 1600, 440
-    M, MID = 88, 800
-    chips = [("01", "IEEE PAPER, FIRST AUTHOR", "violet"),
-             (str(merged), "UPSTREAM PRs MERGED", "emerald"),
-             ("13M+", "ORDER-BOOK ROWS TESTED", "cyan")]
-    o = [head(W, H, "Manav Sharma — ML research, systems and compilers")]
-    o.append(f'''<defs>
-<linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="{c['bg']}"/><stop offset="1" stop-color="{c['bg2']}"/>
-</linearGradient>
-<radialGradient id="b1"><stop offset="0" stop-color="{c['violet']}" stop-opacity="{c['aurora']}"/><stop offset="1" stop-color="{c['violet']}" stop-opacity="0"/></radialGradient>
-<radialGradient id="b2"><stop offset="0" stop-color="{c['cyan']}" stop-opacity="{c['aurora']}"/><stop offset="1" stop-color="{c['cyan']}" stop-opacity="0"/></radialGradient>
-<radialGradient id="b3"><stop offset="0" stop-color="{c['pink']}" stop-opacity="{c['aurora']}"/><stop offset="1" stop-color="{c['pink']}" stop-opacity="0"/></radialGradient>
-<linearGradient id="ink" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="{c['fg']}"/><stop offset=".55" stop-color="{c['violet']}"/><stop offset="1" stop-color="{c['cyan']}"/>
-</linearGradient>
-<linearGradient id="ul" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="{c['violet']}"/><stop offset=".5" stop-color="{c['cyan']}"/><stop offset="1" stop-color="{c['pink']}"/>
-</linearGradient>
-<linearGradient id="gloss" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-</linearGradient>
-<pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
-  <circle cx="1.2" cy="1.2" r="1.2" fill="{c['fg3']}" fill-opacity=".5"/>
-</pattern>
-<linearGradient id="vig" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="#000"/><stop offset=".28" stop-color="#fff"/>
-  <stop offset=".72" stop-color="#fff"/><stop offset="1" stop-color="#000"/>
-</linearGradient>
-<mask id="mgrid"><rect width="{W}" height="{H}" fill="url(#vig)"/></mask>
-<clipPath id="nameclip">{txt(NAME, MID, 238, SANS, 104, "#000", anchor="middle", track=2, weight="800")}</clipPath>
-<clipPath id="frame"><rect width="{W}" height="{H}" rx="0"/></clipPath>
-</defs>''')
-    o.append(css(BASE_CSS + f"""
-@keyframes d1{{0%,100%{{transform:translate(0,0) scale(1)}}50%{{transform:translate(90px,34px) scale(1.18)}}}}
-@keyframes d2{{0%,100%{{transform:translate(0,0) scale(1.08)}}50%{{transform:translate(-70px,-40px) scale(.92)}}}}
-@keyframes d3{{0%,100%{{transform:translate(0,0) scale(.95)}}50%{{transform:translate(46px,58px) scale(1.2)}}}}
-.a1{{animation:d1 23s ease-in-out infinite}}
-.a2{{animation:d2 29s ease-in-out infinite}}
-.a3{{animation:d3 26s ease-in-out infinite}}
-@keyframes sweep{{0%{{transform:translateX(-780px)}}42%,100%{{transform:translateX(780px)}}}}
-.gloss{{animation:sweep 7s cubic-bezier(.5,0,.5,1) infinite}}
-"""))
-    o.append(f'<g clip-path="url(#frame)">')
-    o.append(rect(0, 0, W, H, "url(#sky)"))
-    o.append(f'<g style="filter:blur(96px)">'
-             f'<g class="a1">{circ(300, 118, 250, "url(#b1)")}</g>'
-             f'<g class="a2">{circ(1310, 336, 268, "url(#b2)")}</g>'
-             f'<g class="a3">{circ(838, -46, 224, "url(#b3)")}</g></g>')
-    o.append(f'<rect width="{W}" height="{H}" fill="url(#grid)" mask="url(#mgrid)"/>')
-    # top kickers
-    o.append(f'<g class="fade" style="animation-delay:.15s">')
-    o.append(circ(M + 5, 62, 4.5, c["emerald"]))
-    o.append(circ(M + 5, 62, 4.5, c["emerald"], cls="halo"))
-    o.append(txt("OPEN TO RESEARCH & SYSTEMS ROLES", M + 22, 67, MONO, 14.5, c["fg2"], track=1.5))
-    o.append(txt("IEEE ICIPTM 2026  ·  FIRST AUTHOR", W - M, 67, MONO, 14.5, c["fg2"],
-                 anchor="end", track=1.5))
-    o.append('</g>')
-    # display name + gloss sweep
-    o.append('<g class="rise" style="animation-delay:.1s">')
-    o.append(txt(NAME, MID, 238, SANS, 104, "url(#ink)", anchor="middle", track=2, weight="800"))
-    o.append(f'<g clip-path="url(#nameclip)">'
-             f'<g class="gloss">{rect(MID - 130, 130, 260, 130, "url(#gloss)")}</g></g>')
-    o.append('</g>')
-    o.append(line(MID - 240, 274, MID + 240, 274, "url(#ul)", 3, cap="round",
-                  style="stroke-dasharray:480;stroke-dashoffset:480;"
-                        "animation:draw 1.1s .5s cubic-bezier(.22,1,.36,1) forwards"))
-    # role line, one <text> so it stays centred as a unit
-    spans = f'<tspan fill="{c["fg3"]}">   ·   </tspan>'.join(
-        f'<tspan fill="{c[k]}">{esc(s)}</tspan>' for s, k in ROLE)
-    o.append(f'<text x="{MID}" y="326" text-anchor="middle" font-family="{esc(MONO)}" '
-             f'font-size="18" letter-spacing="1.8" dx="-0.9" class="rise" '
-             f'style="animation-delay:.42s">{spans}</text>')
-    # fact chips, centred as a group
-    ch, gap, pad, ig = 46, 22, 18, 11
-    ws = [pad + w_sans(n, 22) + ig + w_mono(l, 13) + pad for n, l, _ in chips]
-    x = MID - (sum(ws) + gap * (len(ws) - 1)) / 2
-    for j, ((n, l, k), cw) in enumerate(zip(chips, ws)):
-        o.append(f'<g class="rise" style="animation-delay:{.6 + .11 * j:.2f}s">')
-        o.append(rect(x, 366, cw, ch, c[k], rx=23, fo=c["wash"], stroke=c[k], so=".45"))
-        o.append(txt(n, x + pad, 396, SANS, 22, c[k], weight="750"))
-        o.append(txt(l, x + pad + w_sans(n, 22) + ig, 395, MONO, 13, c["fg2"], track=.9))
-        o.append('</g>')
-        x += cw + gap
-    o.append('</g></svg>')
-    return "\n".join(o)
 
-# ----------------------------------------------------------------- 2. LEDGER
-LEDGER = [
-    dict(title="Regime-Aware Meta-Learning for Selective Directional Trading",
-         sub="Unsupervised regime clustering + a MAML-inspired classifier that abstains when unsure",
-         verdict="PEER-REVIEWED", key="violet",
-         fact="IEEE ICIPTM 2026  ·  DOI 10.1109/ICIPTM69057.2026.11466047"),
-    dict(title="Regime-Route",
-         sub="Proof-carrying execution: every routing decision emits a hash-verifiable receipt",
-         verdict="FALSIFIED", key="amber",
-         fact="13M+ ORDER-BOOK ROWS  ·  PAIRED COUNTERFACTUALS  ·  NO EDGE FOUND"),
-    dict(title="Tensor-Forge",
-         sub="A JIT tensor compiler that lowers and shape-specialises itself — no PyTorch, no CUDA",
-         verdict="SHIPPED", key="emerald",
-         fact="5 / 5 CTEST SUITES PASSING  ·  FULL CI"),
-    dict(title="Bitcoin Alpha System",
-         sub="In rebuild — walk-forward and holdout validation are still running",
-         verdict="UNDER AUDIT", key="cyan",
-         fact="NO RETURN FIGURE PUBLISHED UNTIL IT CLEARS"),
+def ident(t, merged: int = 19) -> str:
+    """Plate 1 -- masthead: menu rail, status line, one display size, four tiles."""
+    H = 236
+    o = [head(H, f"{NAME} -- machine learning research, systems, market "
+                f"microstructure"), css(BASE), frame(t, H)]
+
+    # ---- menu rail -------------------------------------------------------
+    o.append(rect(0, 0, W, 26, fill=t["strip"]))
+    o.append(txt(PAD, 17, "MANAVMAX", size=11.5, fill=t["amber"], weight=700,
+                 track=1.2, cls="f"))
+    o.append(txt(100, 17, MENU, size=10, fill=t["fg3"], track=.8, cls="f",
+                 style="animation-delay:.06s"))
+    gx = X1 - w_mono("OPEN TO RESEARCH & SYSTEMS ROLES", 10, .8) - 14
+    o.append('<g class="f" style="animation-delay:.12s">')
+    o.append(rect(gx - 46, 5.5, 38, 15, fill=t["amber"], op=".14", rx=2))
+    o.append(rect(gx - 45.5, 6, 37, 14, stroke=t["amber"], op=".7", rx=2))
+    o.append(txt(gx - 41, 16, "<GO>", size=9.5, fill=t["amber"], weight=700, track=.4))
+    o.append(f'<circle cx="{gx - 1}" cy="12.5" r="3.2" fill="{t["mint"]}" class="bl"/>')
+    o.append(txt(X1, 16, "OPEN TO RESEARCH & SYSTEMS ROLES", size=10,
+                 fill=t["mint"], track=.8, anchor="end"))
+    o.append("</g>")
+    o.append(line(0, 26, W, 26, stroke=t["edge"]))
+
+    # ---- status line -----------------------------------------------------
+    o.append(rect(0, 26, W, 24, fill=t["panel"]))
+    o.append(f'<g class="f" style="animation-delay:.18s">')
+    o.append(fields(t, PAD, 42, [
+        ("FOCUS", "ML RESEARCH + SYSTEMS", t["fg"]),
+        ("PAPER", "IEEE ICIPTM 2026", t["violet"]),
+        ("MERGED", f"{merged} UPSTREAM", t["mint"]),
+        ("ROWS", "13M+", t["cyan"]),
+        ("CLASS", "2026", t["fg2"]),
+    ], size=10))
+    o.append("</g>")
+    o.append(line(0, 50, W, 50, stroke=t["edge"]))
+
+    # ---- identity --------------------------------------------------------
+    o.append(txt(PAD, 74, BEAT, size=10, fill=t["fg3"], track=.8, cls="r",
+                 style="animation-delay:.14s"))
+    o.append(txt(PAD, 116, NAME, size=38, fill=t["fg"], weight=700, track=.5,
+                 cls="r", style="animation-delay:.2s"))
+    o.append(rect(PAD + w_mono(NAME, 38, .5) + 9, 95, 13, 25, fill=t["amber"],
+                  cls="bl"))
+    o.append(txt(PAD, 140, LINE, size=11.5, fill=t["fg2"], cls="r",
+                 style="animation-delay:.26s"))
+
+    # ---- tiles: label / value / caption ----------------------------------
+    KPI = [("IEEE PAPER", "01", "FIRST AUTHOR, ICIPTM 2026", "violet"),
+           ("UPSTREAM MERGED", str(merged), "INTO REPOS I DO NOT OWN", "mint"),
+           ("ORDER-BOOK ROWS", "13M+", "REPLAYED, NOT SIMULATED", "cyan"),
+           ("CLAIMS FALSIFIED", "01", "PUBLISHED ANYWAY", "rose")]
+    cw = (X1 - PAD - 24) / 4
+    for i, (lab, val, cap, key) in enumerate(KPI):
+        x, c = PAD + i * (cw + 8), t[key]
+        o.append(f'<g class="r" style="animation-delay:{.32 + i * .07:.2f}s">')
+        o.append(rect(x, 158, cw, 62, fill=c, op=t["wash"], rx=2))
+        o.append(rect(x + .5, 158.5, cw - 1, 61, stroke=c, op=".30", rx=2))
+        o.append(rect(x + 11, 170, 6, 6, fill=c, rx=1, cls="k",
+                      style=f"animation-delay:{i * .55:.2f}s"))
+        o.append(txt(x + 23, 176, lab, size=9.5, fill=t["fg2"], track=1.2))
+        o.append(txt(x + 11, 202, val, size=22, fill=c, weight=700, track=.3))
+        o.append(txt(x + 11, 214, cap, size=9, fill=t["fg3"], track=.4))
+        o.append("</g>")
+    return "".join(o) + "</svg>"
+BLOTTER = [
+    dict(key="violet", verdict="PEER-REVIEWED",
+         work="Regime-aware meta-learning for selective trading",
+         how="UNSUPERVISED TEMPORAL CLUSTERING  ·  MAML  ·  ABSTENTION",
+         evidence="DOI 10.1109/ICIPTM69057.2026.11466047"),
+    dict(key="rose", verdict="FALSIFIED", work="Regime-Route",
+         how="C++20  ·  POSTGRES  ·  REDIS  ·  HASH-VERIFIED RECEIPTS",
+         evidence="26 ORDERS  ·  -451.96 bps AVG EDGE  ·  38% WIN RATE"),
+    dict(key="mint", verdict="SHIPPED", work="Tensor-Forge",
+         how="C++20  ·  WGSL  ·  ITS OWN JIT, NO PYTORCH, NO CUDA",
+         evidence="5 / 5 CTEST SUITES  ·  FULL CI"),
+    dict(key="cyan", verdict="UNDER AUDIT", work="Bitcoin Alpha System",
+         how="PYTHON  ·  PYTORCH  ·  WALK-FORWARD + HOLDOUT RUNNING",
+         evidence="NO RETURN FIGURE UNTIL VALIDATION CLEARS"),
 ]
-KEYS = [("PEER-REVIEWED", "violet", "external review passed"),
-        ("SHIPPED", "emerald", "tested and running"),
-        ("FALSIFIED", "amber", "effect not found, published anyway"),
-        ("UNDER AUDIT", "cyan", "validation still running")]
-
-def ledger(th: str) -> str:
-    c, W, H, M = T[th], 1600, 580, 88
-    RH, CH, Y0 = 112, 96, 96
-    o = [head(W, H, "The ledger — four claims and the verdict on each")]
-    o.append(css(BASE_CSS))
-    o.append(rect(0, 0, W, H, c["bg"]))
-    o.append(txt("THE LEDGER", M, 46, MONO, 15, c["fg2"], track=3.4, weight="600"))
-    o.append(txt("EVERY CLAIM AND THE VERDICT ON IT  ·  TWO OF THE FOUR ARE NOT WINS",
-                 M + 132, 46, MONO, 13, c["fg3"], track=1.2))
-    o.append(txt("4 ENTRIES", W - M, 46, MONO, 13, c["fg3"], anchor="end", track=1.2))
-    o.append(line(M, 66, W - M, 66, c["edge"], 1))
-
-    for i, e in enumerate(LEDGER):
-        y, hue = Y0 + i * RH, c[e["key"]]
-        cy = y + CH / 2
-        o.append(f'<g class="rise" style="animation-delay:{.12 + i * .13:.2f}s">')
-        o.append(rect(M, y, W - 2 * M, CH, c["panel"], rx=14, stroke=c["edge"], sw=1))
-        o.append(rect(M, y, 3, CH, hue, rx=1.5))                      # channel spine
-        o.append(circ(M + 32, cy, 5.5, hue))
-        o.append(circ(M + 32, cy, 5.5, hue, cls="halo",
-                      style=f"animation-delay:{i * .5:.1f}s"))
-        o.append(txt(e["title"], M + 56, cy - 6, SANS, 23, c["fg"], weight="680"))
-        o.append(txt(e["sub"], M + 56, cy + 20, MONO, 13, c["fg3"], track=.2))
-        pw = w_mono(e["verdict"], 13) + 30
-        px = W - M - 22 - pw
-        o.append(rect(px, cy - 32, pw, 27, hue, rx=13.5, fo=c["wash"], stroke=hue, so=".5"))
-        o.append(txt(e["verdict"], px + pw / 2, cy - 13, MONO, 13, hue,
-                     anchor="middle", track=1.3, weight="600"))
-        o.append(txt(e["fact"], W - M - 22, cy + 22, MONO, 12.5, c["fg2"],
-                     anchor="end", track=.5))
-        o.append('</g>')
-
-    ly = Y0 + 4 * RH + 14
-    o.append(f'<g class="fade" style="animation-delay:.85s">')
-    o.append(txt("KEY", M, ly, MONO, 12, c["fg3"], track=2.2))
-    x = M + 44
-    for name, k, meaning in KEYS:
-        o.append(circ(x + 4, ly - 4, 4, c[k]))
-        o.append(txt(name, x + 16, ly, MONO, 12, c[k], track=.8, weight="600"))
-        x += 16 + w_mono(name, 12) + 8
-        o.append(txt(meaning, x, ly, MONO, 12, c["fg3"], track=.2))
-        x += w_mono(meaning, 12) + 26
-    o.append('</g></svg>')
-    return "\n".join(o)
-
-# ------------------------------------------------- 3. SELECTIVE-SIGNAL TAPE
-# A schematic of the paper's actual contribution: regimes are identified, and
-# the classifier declines to trade inside the ones it is not confident about.
-# Deterministic from a fixed seed so daily rebuilds never produce churn.
-REGIMES = [(0.00, 0.34, "cyan", "REGIME A", True),
-           (0.34, 0.63, "amber", "REGIME B", False),
-           (0.63, 1.00, "violet", "REGIME C", True)]
-
-def regime_at(frac: float) -> tuple[str, bool]:
-    """Which regime band a horizontal position falls in, and whether it acts."""
-    for lo, hi, key, _, act in REGIMES:
-        if lo <= frac <= hi:
-            return key, act
-    return REGIMES[-1][2], REGIMES[-1][4]
+KEY = ("PEER-REVIEWED outside review passed  ·  SHIPPED tested and running  ·  "
+       "FALSIFIED effect absent, published anyway  ·  UNDER AUDIT still validating")
 
 
-def tape(th: str) -> str:
-    c, W, H, M = T[th], 1600, 330, 88
-    PX0, PX1, PY0, PY1 = M, W - M, 86, 250
-    pw, ph = PX1 - PX0, PY1 - PY0
-    rng = random.Random(11)
-    n, v = 150, 0.5
-    ys = []
+def blotter(t) -> str:
+    """Plate 2 -- four claims, one row each, in the execution-blotter grammar.
+
+    A verdict column that is allowed to say FALSIFIED is the entire point. It is
+    the one column a portfolio page never has.
+    """
+    RH, Y0 = 44, 48
+    H = Y0 + RH * len(BLOTTER) + 26
+    o = [head(H, "Claim blotter: four projects, each with a verdict"),
+         css(BASE), frame(t, H)]
+    o.append(panel_head(t, 1, "CLAIM BLOTTER — WHAT I BUILT AND HOW IT ENDED",
+                        "2 of 4 are not wins  ·  none of it is unaudited",
+                        t["amber"]))
+    for x, s, a in ((PAD, "#", "start"), (PAD + 34, "WORK / METHOD", "start"),
+                    (X1 - 118, "EVIDENCE", "end"), (X1, "VERDICT", "end")):
+        o.append(txt(x, 42, s, size=9, fill=t["fg3"], track=1.2, anchor=a))
+    o.append(line(0, Y0, W, Y0, stroke=t["rule"]))
+
+    for i, r in enumerate(BLOTTER):
+        y, c = Y0 + i * RH, t[r["key"]]
+        o.append(f'<g class="r" style="animation-delay:{.14 + i * .09:.2f}s">')
+        o.append(txt(PAD, y + 19, f"{i + 1:02d}", size=11, fill=c, weight=700))
+        o.append(txt(PAD + 34, y + 19, r["work"], size=13, fill=t["fg"], weight=700))
+        o.append(txt(PAD + 34, y + 34, r["how"], size=9.5, fill=t["fg3"], track=.4))
+        o.append(txt(X1, y + 34, r["evidence"], size=10, fill=t["fg2"],
+                     track=.3, anchor="end"))
+        p, pw = pill(0, 0, r["verdict"], c)
+        o.append(f'<g transform="translate({X1 - pw:.1f},{y + 6})">{p}</g>')
+        if i < len(BLOTTER) - 1:
+            o.append(line(PAD, y + RH, X1, y + RH, stroke=t["rule"]))
+        o.append("</g>")
+
+    o.append(line(0, H - 26, W, H - 26, stroke=t["rule"]))
+    o.append(txt(PAD, H - 10, KEY, size=9, fill=t["fg3"], track=.2, cls="f",
+                 style="animation-delay:.6s"))
+    return "".join(o) + "</svg>"
+REGIMES = [(0.00, 0.36, "cyan", "TRENDING", True),
+           (0.36, 0.66, "rose", "VOLATILE", False),
+           (0.66, 1.00, "mint", "CALM", True)]
+
+# (drift, vol) per regime. The first draft ran one cumulative walk with a wider
+# sigma inside VOLATILE, and a walk with wide steps still trends: the abstain
+# band came out as smooth and as directional as the other two, which destroys
+# the only point the plate makes. So the level is frozen there instead and the
+# shocks alternate sign -- chop with no net direction, which is what "unsure"
+# looks like and what the rule is meant to sit out.
+WALK = {"TRENDING": (0.42, 0.20), "VOLATILE": (0.0, 2.6), "CALM": (0.22, 0.11)}
+
+
+def regime_at(f: float):
+    for lo, hi, key, name, act in REGIMES:
+        if lo <= f <= hi:
+            return key, name, act
+    return REGIMES[-1][2], REGIMES[-1][3], REGIMES[-1][4]
+
+
+def regime(t) -> str:
+    """Plate 3 -- the paper's rule, drawn: cluster the tape, act only when sure.
+
+    Schematic, and labelled as one. The series is a seeded walk, not a backtest;
+    the thing being illustrated is the decision rule, which is the contribution.
+    """
+    PY0, PY1, H = 72, 152, 200
+    pw = X1 - PAD
+    o = [head(H, "Selective signal: the model stands down inside the volatile "
+                 "regime"),
+         css(BASE + ".ln{stroke-dasharray:var(--l);stroke-dashoffset:var(--l);"
+                    "animation:draw 2.2s ease-out .3s forwards}"),
+         frame(t, H)]
+    o.append(panel_head(t, 2, "SELECTIVE SIGNAL — IT STANDS DOWN WHEN UNSURE",
+                        "schematic of the rule, not a backtest", t["cyan"]))
+
+    rnd = random.Random(11)
+    n, ys, base, sgn = 132, [], 0.0, 1
     for i in range(n):
-        v += rng.gauss(0, .052) + (.0016 if i < n * .34 else -.0022 if i < n * .63 else .0030)
-        ys.append(v)
-    lo, hi = min(ys), max(ys)
-    TOP = PY0 + 70          # keeps the tallest marker tip clear of the regime labels
-    span = PY1 - 8 - TOP
-    pts = [(PX0 + i * pw / (n - 1), PY1 - 8 - (y - lo) / (hi - lo) * span)
-           for i, y in enumerate(ys)]
-    poly = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
-    length = sum(math.dist(pts[i], pts[i + 1]) for i in range(n - 1))
-
-    o = [head(W, H, "Selective signal — the model declines to act when it is not confident")]
-    o.append(f'''<defs>
-<linearGradient id="tl" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="{c['cyan']}"/><stop offset=".45" stop-color="{c['amber']}"/><stop offset="1" stop-color="{c['violet']}"/>
-</linearGradient>
-<linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="{c['fg']}" stop-opacity="0"/><stop offset="1" stop-color="{c['fg']}" stop-opacity=".16"/>
-</linearGradient>
-</defs>''')
-    o.append(css(BASE_CSS + f"""
-@keyframes scan{{0%{{transform:translateX(0)}}100%{{transform:translateX({pw - 90:.0f}px)}}}}
-.scan{{animation:scan 9s cubic-bezier(.6,0,.4,1) infinite}}
-"""))
-    o.append(rect(0, 0, W, H, c["bg"]))
-    o.append(txt("SELECTIVE SIGNAL", M, 44, MONO, 15, c["fg2"], track=3.4, weight="600"))
-    o.append(txt("WHAT THE MODEL DOES WHEN IT IS NOT CONFIDENT", M + 208, 44, MONO, 13,
-                 c["fg3"], track=1.2))
-    o.append(txt("SCHEMATIC  ·  NOT BACKTEST OUTPUT", W - M, 44, MONO, 12, c["fg3"],
-                 anchor="end", track=1.4))
-    # regime bands
-    for a, b, k, label, act in REGIMES:
-        x, bw = PX0 + a * pw, (b - a) * pw
-        o.append(rect(x, PY0, bw, ph, c[k], fo=c["band"]))
-        o.append(line(x, PY0, x, PY1, c[k], 1, o=".35"))
-        o.append(txt(label, x + 12, PY0 + 20, MONO, 12, c[k], track=1.6, weight="600"))
-        o.append(txt("ACT" if act else "ABSTAIN", x + 12, PY0 + 38, MONO, 11,
-                     c[k] if act else c["fg3"], track=1.4))
-    o.append(line(PX0, PY1, PX1, PY1, c["edge"], 1))
-    # travelling scan band, then the series drawing itself in
-    o.append(f'<g class="scan">{rect(PX0, PY0, 90, ph, "url(#scan)")}</g>')
-    o.append(f'<polyline points="{poly}" fill="none" stroke="url(#tl)" stroke-width="2.4" '
-             f'stroke-linejoin="round" stroke-linecap="round" '
-             f'style="stroke-dasharray:{length:.0f};stroke-dashoffset:{length:.0f};'
-             f'animation:draw 2.1s .25s cubic-bezier(.4,0,.5,1) forwards"/>')
-    # decision markers: filled arrow where it acts, hollow tick where it abstains
-    for j in range(18):
-        i = int((j + .5) * (n - 1) / 18)
-        x, y = pts[i]
-        k, act = regime_at((x - PX0) / pw)
-        d = f'<g class="fade" style="animation-delay:{2.0 + j * .05:.2f}s">'
+        _, nm, act = regime_at(i / (n - 1))
+        drift, vol = WALK[nm]
         if act:
-            d += (f'<path d="M{x - 5.5:.1f},{y - 11:.1f} L{x + 5.5:.1f},{y - 11:.1f} '
-                  f'L{x:.1f},{y - 21:.1f} Z" fill="{c[k]}"/>')
+            base += rnd.gauss(drift, drift * .3)
+            ys.append(base + rnd.gauss(0, vol))
         else:
-            d += line(x - 5, y - 15, x + 5, y - 15, c["fg3"], 2, cap="round")
-        o.append(d + '</g>')
-    # legend
-    ly = 296
-    o.append(f'<g class="fade" style="animation-delay:2.6s">')
-    o.append(f'<path d="M{M + 5:.1f},{ly - 2:.1f} L{M + 16:.1f},{ly - 2:.1f} '
-             f'L{M + 10.5:.1f},{ly - 12:.1f} Z" fill="{c["emerald"]}"/>')
-    o.append(txt("ACT — confidence above threshold, position taken", M + 28, ly, MONO, 13,
-                 c["fg2"], track=.4))
-    x2 = M + 28 + w_mono("ACT — confidence above threshold, position taken", 13) + 40
-    o.append(line(x2, ly - 6, x2 + 11, ly - 6, c["fg3"], 2, cap="round"))
-    o.append(txt("ABSTAIN — below threshold, no position, no guess", x2 + 23, ly, MONO, 13,
-                 c["fg3"], track=.4))
-    o.append('</g></svg>')
-    return "\n".join(o)
+            # Mostly alternating, not strictly: a perfect sawtooth reads as a
+            # decorative glyph. Sign flips 78% of the time, so the period varies
+            # while every point still sits within +/-vol of the frozen level.
+            if rnd.random() < .78:
+                sgn = -sgn
+            ys.append(base + sgn * rnd.uniform(vol * .55, vol))
+    lo, hi = min(ys), max(ys)
+    pts = [(PAD + i * pw / (n - 1), PY1 - (y - lo) / (hi - lo) * (PY1 - PY0))
+           for i, y in enumerate(ys)]
 
-# -------------------------------------------------------------- 4. APPARATUS
-STACK = [("SYSTEMS",  "cyan",    ["C++20", "Python", "TypeScript", "JavaScript"]),
-         ("LEARNING", "violet",  ["PyTorch", "TensorFlow", "scikit-learn", "meta-learning"]),
-         ("STATE",    "emerald", ["PostgreSQL", "Redis", "SQLite"]),
-         ("SURFACE",  "pink",    ["Next.js", "React", "FastAPI"]),
-         ("SHIPPING", "amber",   ["Docker", "GitHub Actions", "CMake / CTest"])]
+    for lo_f, hi_f, key, nm, act in REGIMES:
+        x0, x1 = PAD + lo_f * pw, PAD + hi_f * pw
+        c = t[key]
+        o.append(rect(x0, 32, x1 - x0, 124, fill=c, op=t["band"]))
+        if lo_f:
+            o.append(line(x0, 32, x0, 156, stroke=c, op=".40",
+                          style="stroke-dasharray:3 3"))
+        p, pwid = pill(x0 + 9, 36, nm, c, size=10, h=18, pad=8, track=.8)
+        o.append(f'<g class="f" style="animation-delay:.15s">{p}</g>')
+        o.append(txt(x0 + 17 + pwid, 49, "ACTS" if act else "ABSTAINS", size=10,
+                     fill=t["fg2"] if act else t["fg3"], weight=600, track=1,
+                     cls="f", style="animation-delay:.2s"))
 
-def stack(th: str) -> str:
-    c, W, M = T[th], 1600, 88
-    RH, Y0, PH, PS, PAD, GAP = 54, 84, 32, 13.5, 14, 10
-    H = Y0 + len(STACK) * RH + 26
-    o = [head(W, H, "Apparatus — tools grouped by what they are for")]
-    o.append(css(BASE_CSS))
-    o.append(rect(0, 0, W, H, c["bg"]))
-    o.append(txt("APPARATUS", M, 44, MONO, 15, c["fg2"], track=3.4, weight="600"))
-    o.append(txt("GROUPED BY WHAT IT IS FOR, NOT BY LOGO AVAILABILITY", M + 130, 44, MONO,
-                 13, c["fg3"], track=1.2))
-    k = 0
-    for i, (label, key, items) in enumerate(STACK):
-        top, hue = Y0 + i * RH, c[key]
-        o.append(txt(label, M, top + 22, MONO, 13, hue, track=2.2, weight="600"))
-        o.append(line(M, top + 34, M + 150, top + 34, hue, 1, o=".28"))
-        x = M + 176
+    d = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in pts)
+    L = sum(math.dist(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+    o.append(f'<path d="{d}" fill="none" stroke="{t["fg2"]}" stroke-width="1.6" '
+             f'stroke-linejoin="round" class="ln" style="--l:{L:.0f}"/>')
+
+    # ---- decision rug: one mark per bar, so the stood-down block is visible --
+    # Step 1, not 2. When it sampled every other bar the footer count described
+    # the rug rather than the series, so the plate stated 46 of 66 for a 132-bar
+    # picture. One mark per bar makes the caption true by construction.
+    acted = 0
+    for i in range(n):
+        key, _, act = regime_at(i / (n - 1))
+        x = PAD + i * pw / (n - 1)
+        if act:
+            acted += 1
+            o.append(rect(x, 158, 1.6, 8, fill=t[key], op=".85"))
+        else:
+            o.append(rect(x, 162, 1.6, 3, fill=t["fg3"], op=".55"))
+
+    for i in range(6, n, 13):                       # markers only where it acts
+        key, _, act = regime_at(i / (n - 1))
+        if not act:
+            continue
+        x, y = pts[i]
+        c = t["mint"] if ys[i] >= ys[max(0, i - 6)] else t["rose"]
+        o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3.4" fill="{t["bg"]}" '
+                 f'stroke="{c}" stroke-width="1.8" class="f" '
+                 f'style="animation-delay:{.9 + i * .008:.2f}s"/>')
+
+    o.append('<g class="f" style="animation-delay:1.5s">')
+    o.append(txt(PAD, 186, "MARKER = POSITION TAKEN   ·   FAINT TICK = STOOD DOWN",
+                 size=9.5, fill=t["fg3"], track=.8))
+    o.append(txt(X1, 186, f"ACTED ON {acted} OF {n} BARS  ·  ABSTAINED "
+                          f"{n - acted}  ({(n - acted) * 100 // n}%)",
+                 size=9.5, fill=t["fg2"], track=.8, anchor="end"))
+    o.append("</g>")
+    return "".join(o) + "</svg>"
+STACK = [("SYSTEMS", "cyan", ["C++20", "Python", "TypeScript", "JavaScript"],
+          "c++20 in regime-route and tensor-forge · python in bitcoin-alpha"),
+         ("LEARNING", "violet", ["PyTorch", "TensorFlow", "scikit-learn",
+                                 "meta-learning"],
+          "pytorch in bitcoin-alpha · maml + clustering in the paper"),
+         ("STATE", "mint", ["PostgreSQL", "Redis", "SQLite"],
+          "postgres and redis behind regime-route's 13m+ rows"),
+         ("SURFACE", "amber", ["Next.js", "React", "FastAPI"],
+          "next.js consoles: regime-route, tensor-forge"),
+         ("SHIPPING", "rose", ["Docker", "GitHub Actions", "CMake / CTest"],
+          "github actions + ctest: 5/5 suites green in tensor-forge")]
+
+
+def stack(t) -> str:
+    """Plate 4 -- the apparatus as five labelled lanes, not a wall of badges."""
+    RH, Y0 = 32, 44
+    H = Y0 + RH * len(STACK) + 14
+    o = [head(H, "Apparatus: systems, learning, state, surface, shipping"),
+         css(BASE), frame(t, H)]
+    o.append(panel_head(t, 3, "APPARATUS — WHAT I HAVE ACTUALLY SHIPPED WITH",
+                        "grouped by what it is for, not by badge count",
+                        t["violet"]))
+    for i, (lab, key, items, where) in enumerate(STACK):
+        y, c = Y0 + i * RH, t[key]
+        o.append(f'<g class="r" style="animation-delay:{.12 + i * .08:.2f}s">')
+        o.append(rect(PAD, y + 7, 3, 12, fill=c, rx=1))
+        o.append(txt(PAD + 11, y + 19, lab, size=10, fill=c, weight=700, track=1.3))
+        x = PAD + 100
         for it in items:
-            pw = w_mono(it, PS) + PAD * 2
-            o.append(f'<g class="rise" style="animation-delay:{.08 + k * .045:.2f}s">')
-            o.append(rect(x, top, pw, PH, hue, rx=PH / 2, fo=c["wash"], stroke=hue, so=".38"))
-            o.append(txt(it, x + pw / 2, top + 21, MONO, PS, c["fg"], anchor="middle"))
-            o.append('</g>')
-            x += pw + GAP
-            k += 1
-    o.append('</svg>')
-    return "\n".join(o)
+            p, pwid = pill(x, y + 5, it, c, size=11, h=21, pad=8, track=0)
+            o.append(p)
+            x += pwid + 6
+        o.append(txt(X1, y + 19, where, size=9, fill=t["fg3"], track=.3,
+                     anchor="end"))
+        if i < len(STACK) - 1:
+            o.append(line(PAD, y + RH, X1, y + RH, stroke=t["rule"]))
+        o.append("</g>")
+    return "".join(o) + "</svg>"
 
-# ------------------------------------------------------------- 5. LIVE RULE
-def rule(th: str) -> str:
-    """A hairline divider with a light pulse travelling along it."""
-    c, W, H = T[th], 1600, 10
-    o = [head(W, H, "")]
-    o.append(f'''<defs>
-<linearGradient id="rl" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="{c['violet']}" stop-opacity="0"/>
-  <stop offset=".22" stop-color="{c['violet']}" stop-opacity=".55"/>
-  <stop offset=".5" stop-color="{c['cyan']}" stop-opacity=".55"/>
-  <stop offset=".78" stop-color="{c['pink']}" stop-opacity=".55"/>
-  <stop offset="1" stop-color="{c['pink']}" stop-opacity="0"/>
-</linearGradient>
-<linearGradient id="pl" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="{c['fg']}" stop-opacity="0"/>
-  <stop offset=".5" stop-color="{c['fg']}" stop-opacity=".9"/>
-  <stop offset="1" stop-color="{c['fg']}" stop-opacity="0"/>
-</linearGradient>
-</defs>''')
-    o.append(css(f"""
-@keyframes go{{0%{{transform:translateX(-260px)}}100%{{transform:translateX({W}px)}}}}
-.p{{animation:go 6.5s linear infinite}}
-"""))
-    o.append(rect(0, 4, W, 1.6, "url(#rl)"))
-    o.append(f'<g class="p">{rect(0, 3.4, 240, 2.6, "url(#pl)", rx=1.3)}</g>')
-    o.append('</svg>')
-    return "\n".join(o)
 
-# ------------------------------------------------------------------- driver
-PANELS = {"hero": hero, "ledger": ledger, "tape": tape, "stack": stack, "rule": rule}
+FKEYS = [("F1", "IEEE PAPER"), ("F2", "REGIME-ROUTE"), ("F3", "TENSOR-FORGE"),
+         ("F4", "BITCOIN-ALPHA"), ("F5", "LINKEDIN"), ("F6", "EMAIL")]
+
+
+def keys(t) -> str:
+    """Plate 5 -- the F-key rail off the bottom of a terminal. The links below it
+    in the README are the real, clickable version; this is the chrome."""
+    H = 36
+    o = [head(H, "Function key rail: paper, projects, contact"), css(BASE),
+         rect(0, 0, W, H, fill=t["strip"], rx=2),
+         rect(.5, .5, W - 1, H - 1, stroke=t["edge"], rx=2)]
+    cw = (X1 - PAD - 5 * 6) / 6
+    for i, (fk, lab) in enumerate(FKEYS):
+        x = PAD + i * (cw + 6)
+        o.append(f'<g class="f" style="animation-delay:{.06 + i * .05:.2f}s">')
+        o.append(rect(x, 6, cw, 24, fill=t["panel"], rx=2))
+        o.append(rect(x + .5, 6.5, cw - 1, 23, stroke=t["edge"], rx=2))
+        o.append(rect(x + 5, 10, 19, 16, fill=t["amber"], op=".16", rx=2))
+        o.append(rect(x + 5.5, 10.5, 18, 15, stroke=t["amber"], op=".55", rx=2))
+        o.append(txt(x + 8.5, 21, fk, size=9, fill=t["amber"], weight=700, track=.4))
+        o.append(txt(x + 29, 21, lab, size=10, fill=t["fg2"], track=.3))
+        o.append("</g>")
+    return "".join(o) + "</svg>"
+
+
+PLATES = {"ident": ident, "blotter": blotter, "regime": regime, "stack": stack,
+          "keys": keys}
+
 
 def main() -> int:
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(description="Render the profile plates.")
     ap.add_argument("--out", default="assets")
     ap.add_argument("--merged", type=int, default=19,
-                    help="upstream merged-PR count baked into the hero chip")
+                    help="upstream merged-PR count shown in the masthead")
     a = ap.parse_args()
-    d = pathlib.Path(a.out); d.mkdir(parents=True, exist_ok=True)
-    for name, fn in PANELS.items():
-        for th in T:
-            svg = fn(th, a.merged) if name == "hero" else fn(th)
+    d = pathlib.Path(a.out)
+    d.mkdir(parents=True, exist_ok=True)
+    for name, fn in PLATES.items():
+        for th, t in T.items():
+            svg = fn(t, a.merged) if name == "ident" else fn(t)
             p = d / f"{name}-{th}.svg"
             p.write_text(svg, encoding="utf-8")
             print(f"  {p}  {p.stat().st_size / 1024:5.1f} KB")
     return 0
 
+
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+
+
+

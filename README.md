@@ -1,140 +1,108 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="assets/hero-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img alt="Manav Sharma — ML research, systems and compilers" src="assets/hero-dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/ident-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/ident-light.svg">
+  <img alt="MANAVMAX — Manav Sharma. I build learning systems, then build the harness that tries to break them." src="assets/ident-dark.svg" width="100%">
 </picture>
 
-<!-- dateline:start -->`VOL. I` · `NO. 215` · `05 SEPTEMBER 2026` · `BUILT BY GITHUB ACTIONS`<!-- dateline:end -->
-
-<a href="https://www.linkedin.com/in/manavofficialdev"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0B1120?style=for-the-badge&logo=linkedin&logoColor=22D3EE&labelColor=0B1120"></a>
-<a href="mailto:manav.official.dev@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-0B1120?style=for-the-badge&logo=gmail&logoColor=F472B6&labelColor=0B1120"></a>
-<a href="https://doi.org/10.1109/ICIPTM69057.2026.11466047"><img alt="IEEE DOI" src="https://img.shields.io/badge/IEEE_DOI-0B1120?style=for-the-badge&logo=ieee&logoColor=A78BFA&labelColor=0B1120"></a>
-<a href="https://github.com/manavmax?tab=repositories"><img alt="Repositories" src="https://img.shields.io/badge/Repositories-0B1120?style=for-the-badge&logo=github&logoColor=34D399&labelColor=0B1120"></a>
-
-<img alt="" src="assets/rule-dark.svg" width="100%">
+<!-- dateline:start --><code>SESSION 2026-09-05</code> · <code>PLATES 10</code> · <code>RENDER build/render.py</code> · <code>CHECK build/verify.py</code> · <code>JS 0</code><!-- dateline:end -->
 
 </div>
 
-## &nbsp;⟡&nbsp; The ledger
-
-<div align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="assets/ledger-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/ledger-light.svg">
-  <img alt="Four claims and the verdict on each: peer-reviewed, falsified, shipped, under audit" src="assets/ledger-dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/blotter-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/blotter-light.svg">
+  <img alt="Claim blotter: four projects and the verdict on each — peer-reviewed, falsified, shipped, under audit" src="assets/blotter-dark.svg" width="100%">
 </picture>
-</div>
 
-Most profiles are a showcase, where everything is a win. This one is a ledger, because
-**two of my four projects are not wins** and hiding that would make the other two worth less.
+Most profiles are a showcase, where every row is a win. This one is a blotter, so it has a
+verdict column — and **two of the four verdicts are not wins.** That is the point. Hiding them
+would make the other two worth less.
 
 | | Work | Verdict | The record |
 |:--|:--|:--|:--|
-| 🟣 | **A Regime-Aware Meta-Learning Framework for Selective Directional Trading in Cryptocurrency Markets** | `PEER-REVIEWED` | First author. Unsupervised temporal clustering identifies latent market regimes; a MAML-inspired meta-learned classifier then **abstains** instead of guessing under low confidence. IEEE ICIPTM 2026 · [`10.1109/ICIPTM69057.2026.11466047`](https://doi.org/10.1109/ICIPTM69057.2026.11466047) |
-| 🟡 | **[Regime-Route](https://github.com/manavmax/Regime-Route)** · `C++20` `PostgreSQL` `Redis` `Next.js` | `FALSIFIED` | Proof-carrying execution — every routing decision emits a **hash-verifiable receipt**. Multi-tenant auth, idempotent order submission, TLS reverse proxy. Exercised against **13M+ real order-book rows** with paired counterfactual tests. Final conclusion: **no economically meaningful edge.** I published that instead of quietly reframing the goal. The receipts still work; so does the negative result. |
-| 🟢 | **[Tensor-Forge](https://github.com/manavmax/Tensor-Forge)** · `C++20` `WGSL` `Next.js` | `SHIPPED` | A from-scratch JIT tensor compiler with **no PyTorch and no CUDA underneath** — it lowers and shape-specialises itself, and you can inspect every stage. **5/5 CTest suites passing**, full CI. |
-| 🔵 | **[Bitcoin-Alpha-System](https://github.com/manavmax/Bitcoin-Alpha-System)** · `Python` `PyTorch` | `UNDER AUDIT` | In rebuild. Walk-forward and holdout validation are still running, so **there is no return figure on this page.** Publishing one now would be a claim I cannot defend yet. |
+| `01` | **A Regime-Aware Meta-Learning Framework for Selective Directional Trading in Cryptocurrency Markets** | `PEER-REVIEWED` | First author. Unsupervised temporal clustering finds latent market regimes; a MAML-inspired meta-learned classifier then **abstains** rather than guess under low confidence. IEEE ICIPTM 2026 · [`10.1109/ICIPTM69057.2026.11466047`](https://doi.org/10.1109/ICIPTM69057.2026.11466047) |
+| `02` | **[Regime-Route](https://github.com/manavmax/Regime-Route)** · `C++20` `PostgreSQL` `Redis` `Next.js` | `FALSIFIED` | Proof-carrying execution: every routing decision emits a **hash-verifiable receipt**. Multi-tenant auth, idempotent submission, TLS reverse proxy. Replayed against **13M+ real order-book rows** with paired counterfactuals. The honest, final conclusion was that **no economically meaningful edge was found** — 26 orders, −451.96 bps average edge, 38% win rate across $259,069,209 of paper notional. I published that instead of quietly reframing the goal. The receipts still work; so does the negative result. |
+| `03` | **[Tensor-Forge](https://github.com/manavmax/Tensor-Forge)** · `C++20` `WGSL` `Next.js` | `SHIPPED` | A from-scratch JIT tensor compiler with **no PyTorch and no CUDA underneath** — it lowers and shape-specialises itself, and every stage is inspectable. **5/5 CTest suites passing**, full CI. |
+| `04` | **[Bitcoin-Alpha-System](https://github.com/manavmax/Bitcoin-Alpha-System)** · `Python` `PyTorch` | `UNDER AUDIT` | Under active audit and rebuild. Walk-forward and holdout validation are still in progress, so **no performance number appears on this page and none should be stated as final.** Honest status: in progress, rebuilding under audit. |
 
-<samp><b>KEY</b> — `PEER-REVIEWED` external review passed · `SHIPPED` tested and running · `FALSIFIED` looked for the effect, did not find it, published anyway · `UNDER AUDIT` validation still running, nothing claimed until it clears</samp>
+<samp><b>KEY</b> — <code>PEER-REVIEWED</code> outside review passed · <code>SHIPPED</code> tested and running · <code>FALSIFIED</code> looked for the effect, did not find it, published anyway · <code>UNDER AUDIT</code> still validating, nothing claimed until it clears</samp>
 
-<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
-
-## &nbsp;⟡&nbsp; Selective signal
-
-<div align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="assets/tape-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/tape-light.svg">
-  <img alt="Schematic: three latent regimes; the model takes positions in two and abstains in the third" src="assets/tape-dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/regime-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/regime-light.svg">
+  <img alt="Selective signal: three latent regimes. The model takes positions in two and stands down in the volatile third." src="assets/regime-dark.svg" width="100%">
 </picture>
-</div>
 
-This is the idea the paper is actually about, drawn rather than described. Cluster the tape into
-latent regimes without labels, then let the classifier **decline to act** in the regime it cannot
-call. A model that abstains 40% of the time and is right when it speaks beats one that always has
-an opinion. **Schematic, not backtest output** — the shape is illustrative, the argument is not.
+```
+raw tape ──> temporal clustering ──> regime label ──┬──> confident ────────> take the position
+                                                    │
+                                                    └──> not confident ──> stand down, stay flat
+```
 
-<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
+This is what the paper argues, drawn rather than described. Cluster the tape into latent regimes
+with no labels, then let the classifier **decline to act** in the regime it cannot call. A model
+that stands down 29% of the time and is right when it speaks beats one that always has an opinion.
+The plate is a **schematic of the rule, not backtest output** — the shape is illustrative, the
+argument is not.
 
-## &nbsp;⟡&nbsp; Upstream
+### <samp>4 · UPSTREAM — THE PART OF THE RECORD I DID NOT GRADE MYSELF</samp>
 
-<samp>THE PART OF THE RECORD I DID NOT GET TO GRADE MYSELF — COUNTED LIVE BY THE GITHUB SEARCH API</samp>
+<samp>COUNTED LIVE BY THE GITHUB SEARCH API, NOT BY ME</samp>
 <!-- upstream:start -->
 | Project | Maintained by | Where I worked | Merged |
 |:--|:--|:--|--:|
-| **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** <!-- n:google-gemini/gemini-cli=2 --> | Google | `cli` `core` `extensions` `devtools` | `2` |
-| **[Oppia](https://github.com/oppia/oppia)** <!-- n:oppia/oppia=2 --> | Oppia Foundation | LEAP team — led a Redis infrastructure upgrade | `2` |
+| **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** <!-- n:google-gemini/gemini-cli=8 --> | Google | `cli` `core` `extensions` `devtools` | `8` |
+| **[Oppia](https://github.com/oppia/oppia)** <!-- n:oppia/oppia=10 --> | Oppia Foundation | LEAP team — led a Redis infrastructure upgrade | `10` |
 | **[OpenMetadata](https://github.com/open-metadata/OpenMetadata)** <!-- n:open-metadata/OpenMetadata=1 --> | Collate | metadata platform | `1` |
 
-<samp><b>5</b> pull requests merged by maintainers who owe me nothing · counted by the GitHub Search API on <code>2026-09-05</code>, not by me</samp>
+<samp><b>19</b> pull requests merged by maintainers who owe me nothing · counted on <code>2026-09-05</code></samp>
 <!-- upstream:end -->
 
 The Oppia one is the one I would point at. The Redis upgrade was unglamorous infrastructure work
 that was **failing CI for every other contributor** — which is exactly why it was worth doing.
 
-<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
-
-## &nbsp;⟡&nbsp; Apparatus
-
-<div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/stack-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/stack-light.svg">
-  <img alt="Tools grouped by purpose: systems, learning, state, surface, shipping" src="assets/stack-dark.svg" width="100%">
+  <img alt="Apparatus: tools grouped by purpose — systems, learning, state, surface, shipping" src="assets/stack-dark.svg" width="100%">
 </picture>
-</div>
 
-<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
-
-## &nbsp;⟡&nbsp; Telemetry
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/keys-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/keys-light.svg">
+  <img alt="Function key rail: paper, projects, contact" src="assets/keys-dark.svg" width="100%">
+</picture>
 
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&bg_color=0B1120&color=F1F5F9&line=22D3EE&point=A78BFA&title_color=A78BFA&area=true&area_color=1E293B&hide_border=true&custom_title=Contribution%20activity">
-  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&bg_color=FFFFFF&color=0F172A&line=0891B2&point=7C3AED&title_color=7C3AED&area=true&area_color=F1F5F9&hide_border=true&custom_title=Contribution%20activity">
-  <img alt="Contribution activity graph" src="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&bg_color=0B1120&color=F1F5F9&line=22D3EE&point=A78BFA&title_color=A78BFA&area=true&area_color=1E293B&hide_border=true&custom_title=Contribution%20activity" width="98%">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8&icon_color=34D399&ring_color=22D3EE">
-  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=7C3AED&text_color=475569&icon_color=059669&ring_color=0891B2">
-  <img alt="GitHub statistics" src="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8&icon_color=34D399&ring_color=22D3EE" height="165">
-</picture>
-<picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&langs_count=8&hide_border=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8">
-  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&langs_count=8&hide_border=true&bg_color=FFFFFF&title_color=7C3AED&text_color=475569">
-  <img alt="Most used languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&langs_count=8&hide_border=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8" height="165">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="assets/snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/snake-light.svg">
-  <img alt="A snake eating my contribution graph" src="assets/snake-dark.svg" width="100%">
-</picture>
-
-<samp>The two stat cards are the only things on this page served by someone else's server, so they are
-the only things that can break. Everything above them is an SVG generated by a script in this repo.</samp>
+<a href="https://doi.org/10.1109/ICIPTM69057.2026.11466047"><kbd>F1</kbd> <samp>IEEE PAPER</samp></a> &nbsp;·&nbsp;
+<a href="https://github.com/manavmax/Regime-Route"><kbd>F2</kbd> <samp>REGIME-ROUTE</samp></a> &nbsp;·&nbsp;
+<a href="https://github.com/manavmax/Tensor-Forge"><kbd>F3</kbd> <samp>TENSOR-FORGE</samp></a> &nbsp;·&nbsp;
+<a href="https://github.com/manavmax/Bitcoin-Alpha-System"><kbd>F4</kbd> <samp>BITCOIN-ALPHA</samp></a> &nbsp;·&nbsp;
+<a href="https://www.linkedin.com/in/manavofficialdev"><kbd>F5</kbd> <samp>LINKEDIN</samp></a> &nbsp;·&nbsp;
+<a href="mailto:manav.official.dev@gmail.com"><kbd>F6</kbd> <samp>EMAIL</samp></a>
 
 </div>
 
-<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
+### <samp>5 · COLOPHON</samp>
 
-## &nbsp;⟡&nbsp; Colophon
-
-**Manav Sharma** — final-year B.Tech in Computer Science, Class of 2026, India.
+**Manav Sharma** — final-year B.Tech in Computer Science, Class of 2026, India. He/him.
 Looking for research and systems work where the validation is taken as seriously as the model.
+If a number on this page is wrong, open an issue: I would rather be corrected in public than
+quoted incorrectly.
 
-<samp>
-Set in <b>Inter</b> and <b>JetBrains Mono</b>, with a system fallback stack — GitHub serves SVG under
-<code>default-src 'none'</code>, so no webfont can be fetched and none is relied on. Every graphic
-above is generated by <code>build/render.py</code> into paired light and dark plates and animated with
-CSS <code>@keyframes</code> inside the SVG, which GitHub's CSP allows via <code>style-src 'unsafe-inline'</code>.
-The dateline and the merge counts are rewritten daily by GitHub Actions between HTML-comment sentinels.
-No JavaScript runs anywhere on this page; it cannot.
-</samp>
+```
+RENDER  build/render.py        ->  5 plates x 2 themes, drawn at 880px, which is GitHub's column width
+CHECK   build/verify.py        ->  AA contrast on every ground · data colours separable · nothing under 9px
+                                   in bounds · no baseline collisions · no dangling url(#) · no external fetch
+LIVE    build/build_readme.py  ->  rewrites the dateline and the merge counts between HTML sentinels
+FONTS   monospace, system stack.  GitHub serves SVG under default-src 'none', so no webfont can load.
+MOTION  CSS @keyframes in the SVG. Allowed by style-src 'unsafe-inline'. No JavaScript runs here.
+```
 
-<samp><b>ERRATA</b> — if a number here is wrong, open an issue. I would rather be corrected in public
-than quoted incorrectly.</samp>
+<samp>Every graphic above is generated by a script in this repository and served from it. Nothing on
+this page is fetched from a third-party image service, which is why nothing on it can go missing.</samp>
+
+
