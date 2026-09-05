@@ -1,213 +1,140 @@
-<!-- Animated Header -->
-
-<h1 align="center">Hi 👋, I'm Manav</h1>
-<h3 align="center"> AI/ML Enthusiast • Quant Trader Enthusiast • Open Source Contributor</h3>
-
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=800&center=true&vCenter=true&width=600&lines=Building+Alpha+with+AI+%26+Data;Quantitative+Trading+Systems;Machine+Learning+for+Finance;Open+Source+Contributor" />
-</p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=manavmax&label=Profile%20Views&color=0e75b6&style=flat" />
-  <img src="https://img.shields.io/badge/Focus-Quant%20Trading-0A66C2?style=flat" />
-  <img src="https://img.shields.io/badge/AI-ML%20Research-FF6F00?style=flat" />
-  <img src="https://img.shields.io/badge/Status-IEEE%20Accepted-success?style=flat" />
-</p>
-
-<!--🖼️RICK-->
-<p align="center">
-<img src="https://c.tenor.com/p7IgwS17V0sAAAAC/rtj-rick-and-morty.gif" height="240" width="370">
-
-
-## 🦍 About Me
-
-*  Passionate about **Machine Learning & Artificial Intelligence**
-*  Building **alpha-generating quantitative systems** for crypto markets
-*  Focused on **real-world performance (returns, Sharpe, drawdown)**
-*  Targeting **high-impact open source contribution & research credibility**
-*  Strong in **C++, Python, DSA, System Design**
-
-
-## 📽️ Ongoing Project
-
-###  Bitcoin Alpha Prediction System (Quant AI Engine)
-
-> A production-oriented, research-backed system designed to generate **consistent alpha** in crypto markets using **ML + on-chain intelligence + market structure modeling**.
-
-####  Performance Snapshot (Version 3)
-
-| Metric            | Value                                 |
-| ----------------- | ------------------------------------- |
-| Total Return (4Y) | **450%**                           |
-| Buy & Hold        | 147.6%                                |
-| Edge              | **~3.5x Outperformance**              |
-| Focus             | Sharpe ↑ • Drawdown ↓ • Consistency ↑ |
-
-####  Core Architecture
-
-* On-chain features (miner revenue, tx volume, activity)
-* Market microstructure + technical signals
-* ML-based decision layer (ensemble/stacking ready)
-* Strategy evaluation via **real trading metrics (NOT just accuracy)**
-
-####  Positioning
-
-> Designed in the direction of **quant hedge fund-style alpha models**, where performance is measured by **returns, risk, and robustness**, not just predictions.
-
-####  Roadmap
-
-* **V3:** Signal refinement, feature engineering, regime detection
-* **V4:** Advanced ML architecture, robustness, live deployment readiness
-
-
-## 📂 Projects
-
-###  Promac (3D Portfolio + E-Commerce Platform)
-
-* Futuristic **3D interactive web experience**
-* Hybrid **portfolio + product platform**
-* Focus: **premium UI/UX + real-world usability**
-
-###  Face Detection System (Qt + OpenCV)
-
-* Real-time detection using **DNN models**
-* Manual capture, thumbnails, UI polish
-* Built with **Qt (C++) + OpenCV**
-
-
-## 📄 Research & Publications
-
-### 📘 IEEE Accepted Research Paper
-
-> **A Regime-Aware Meta-Learning Framework for
-Selective Directional Trading in Cryptocurrency
-Markets**
-
-*  Accepted in **IEEE**
-*  Publishing within **~2 months**
-*  Focus:
-
-  * ML for financial prediction
-  * On-chain signal engineering
-  * Strategy optimization using real metrics
-
-
-##  Tech Stack
-
-###  Languages
-
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge\&logo=cplusplus\&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge\&logo=python\&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-
-
-###  AI/ML
-
-![Machine Learning](https://img.shields.io/badge/Machine%20Learning-FF6F00?style=for-the-badge\&logo=tensorflow\&logoColor=white)
-![Deep Learning](https://img.shields.io/badge/Deep%20Learning-8A2BE2?style=for-the-badge)
-![HuggingFace](https://img.shields.io/badge/huggingface-%23FFD21E.svg?style=for-the-badge&logo=huggingface&logoColor=white)
-![LangChain](https://img.shields.io/badge/langchain-%231C3C3C.svg?style=for-the-badge&logo=langchain&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black)
-![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
-![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
-![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
-
-
-### Database
-
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
-
-###  Tools, Frameworks & Servers
-
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge\&logo=git\&logoColor=white)
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
-![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
-![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![WordPress](https://img.shields.io/badge/WordPress-%23117AC9.svg?style=for-the-badge&logo=WordPress&logoColor=white)
-![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
-
-
-### CI
-
-![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
-
-### Cloud
-
-![Amazon S3](https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white)
-
-## GitHub Stats
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=manavmax&theme=tokyonight&hide_border=true" height="165" />
-</p>
-
-<!-- 🏆 TROPHIES -->
 <div align="center">
 
-<br>
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/hero-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <img alt="Manav Sharma — ML research, systems and compilers" src="assets/hero-dark.svg" width="100%">
+</picture>
 
-<img src="https://github-profile-trophy-trinibs-projects.vercel.app/?username=manavmax&theme=matrix&no-bg=true&no-frame=true&row=2&column=4" />
+<!-- dateline:start -->`VOL. I` · `NO. 215` · `05 SEPTEMBER 2026` · `BUILT BY GITHUB ACTIONS`<!-- dateline:end -->
 
-<br><br>
+<a href="https://www.linkedin.com/in/manavofficialdev"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0B1120?style=for-the-badge&logo=linkedin&logoColor=22D3EE&labelColor=0B1120"></a>
+<a href="mailto:manav.official.dev@gmail.com"><img alt="Email" src="https://img.shields.io/badge/Email-0B1120?style=for-the-badge&logo=gmail&logoColor=F472B6&labelColor=0B1120"></a>
+<a href="https://doi.org/10.1109/ICIPTM69057.2026.11466047"><img alt="IEEE DOI" src="https://img.shields.io/badge/IEEE_DOI-0B1120?style=for-the-badge&logo=ieee&logoColor=A78BFA&labelColor=0B1120"></a>
+<a href="https://github.com/manavmax?tab=repositories"><img alt="Repositories" src="https://img.shields.io/badge/Repositories-0B1120?style=for-the-badge&logo=github&logoColor=34D399&labelColor=0B1120"></a>
+
+<img alt="" src="assets/rule-dark.svg" width="100%">
 
 </div>
 
+## &nbsp;⟡&nbsp; The ledger
 
-## Contribution Activity
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/ledger-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/ledger-light.svg">
+  <img alt="Four claims and the verdict on each: peer-reviewed, falsified, shipped, under audit" src="assets/ledger-dark.svg" width="100%">
+</picture>
+</div>
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&theme=tokyo-night&hide_border=true" />
-</p>
+Most profiles are a showcase, where everything is a win. This one is a ledger, because
+**two of my four projects are not wins** and hiding that would make the other two worth less.
 
-<!--🐍💬SNAKETITLE / 🌐WEBSITE: https://textanim.com/ -->
-<p align="center">
-<img src="https://i.imgur.com/x1KbuCq.gif" width="500">
+| | Work | Verdict | The record |
+|:--|:--|:--|:--|
+| 🟣 | **A Regime-Aware Meta-Learning Framework for Selective Directional Trading in Cryptocurrency Markets** | `PEER-REVIEWED` | First author. Unsupervised temporal clustering identifies latent market regimes; a MAML-inspired meta-learned classifier then **abstains** instead of guessing under low confidence. IEEE ICIPTM 2026 · [`10.1109/ICIPTM69057.2026.11466047`](https://doi.org/10.1109/ICIPTM69057.2026.11466047) |
+| 🟡 | **[Regime-Route](https://github.com/manavmax/Regime-Route)** · `C++20` `PostgreSQL` `Redis` `Next.js` | `FALSIFIED` | Proof-carrying execution — every routing decision emits a **hash-verifiable receipt**. Multi-tenant auth, idempotent order submission, TLS reverse proxy. Exercised against **13M+ real order-book rows** with paired counterfactual tests. Final conclusion: **no economically meaningful edge.** I published that instead of quietly reframing the goal. The receipts still work; so does the negative result. |
+| 🟢 | **[Tensor-Forge](https://github.com/manavmax/Tensor-Forge)** · `C++20` `WGSL` `Next.js` | `SHIPPED` | A from-scratch JIT tensor compiler with **no PyTorch and no CUDA underneath** — it lowers and shape-specialises itself, and you can inspect every stage. **5/5 CTest suites passing**, full CI. |
+| 🔵 | **[Bitcoin-Alpha-System](https://github.com/manavmax/Bitcoin-Alpha-System)** · `Python` `PyTorch` | `UNDER AUDIT` | In rebuild. Walk-forward and holdout validation are still running, so **there is no return figure on this page.** Publishing one now would be a claim I cannot defend yet. |
 
-![Snake animation](https://raw.githubusercontent.com/manavmax/manavmax/output/github-snake-dark.svg)
+<samp><b>KEY</b> — `PEER-REVIEWED` external review passed · `SHIPPED` tested and running · `FALSIFIED` looked for the effect, did not find it, published anyway · `UNDER AUDIT` validation still running, nothing claimed until it clears</samp>
 
+<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
 
-##  Highlights
+## &nbsp;⟡&nbsp; Selective signal
 
-*  Building **real alpha trading system (450%+ backtested return)**
-*  **IEEE accepted research paper** (AI + Finance)
-*  Strong foundation in **DSA, ML, and system design**
-*  Active in **open source contributions**
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/tape-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/tape-light.svg">
+  <img alt="Schematic: three latent regimes; the model takes positions in two and abstains in the third" src="assets/tape-dark.svg" width="100%">
+</picture>
+</div>
 
+This is the idea the paper is actually about, drawn rather than described. Cluster the tape into
+latent regimes without labels, then let the classifier **decline to act** in the regime it cannot
+call. A model that abstains 40% of the time and is right when it speaks beats one that always has
+an opinion. **Schematic, not backtest output** — the shape is illustrative, the argument is not.
 
-## Current Focus
+<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
 
-*  Scaling **quant models to production-grade systems**
-*  Publishing **AI + Finance research**
-*  Mastering **advanced algorithms & system design**
-*  Contributing to **high-impact OSS**
+## &nbsp;⟡&nbsp; Upstream
 
+<samp>THE PART OF THE RECORD I DID NOT GET TO GRADE MYSELF — COUNTED LIVE BY THE GITHUB SEARCH API</samp>
+<!-- upstream:start -->
+| Project | Maintained by | Where I worked | Merged |
+|:--|:--|:--|--:|
+| **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** <!-- n:google-gemini/gemini-cli=8 --> | Google | `cli` `core` `extensions` `devtools` | `8` |
+| **[Oppia](https://github.com/oppia/oppia)** <!-- n:oppia/oppia=10 --> | Oppia Foundation | LEAP team — led a Redis infrastructure upgrade | `10` |
+| **[OpenMetadata](https://github.com/open-metadata/OpenMetadata)** <!-- n:open-metadata/OpenMetadata=1 --> | Collate | metadata platform | `1` |
 
-## Connect With Me
-* 📧 Email: (manav.official.dev@gmail.com)
+<samp><b>19</b> pull requests merged by maintainers who owe me nothing · counted by the GitHub Search API on <code>2026-09-05</code>, not by me</samp>
+<!-- upstream:end -->
 
+The Oppia one is the one I would point at. The Redis upgrade was unglamorous infrastructure work
+that was **failing CI for every other contributor** — which is exactly why it was worth doing.
 
-## Philosophy
+<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
 
-> Not just building projects — building systems that consistently outperform the market competitors.
+## &nbsp;⟡&nbsp; Apparatus
 
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/stack-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/stack-light.svg">
+  <img alt="Tools grouped by purpose: systems, learning, state, surface, shipping" src="assets/stack-dark.svg" width="100%">
+</picture>
+</div>
+
+<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
+
+## &nbsp;⟡&nbsp; Telemetry
+
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&bg_color=0B1120&color=F1F5F9&line=22D3EE&point=A78BFA&title_color=A78BFA&area=true&area_color=1E293B&hide_border=true&custom_title=Contribution%20activity">
+  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&bg_color=FFFFFF&color=0F172A&line=0891B2&point=7C3AED&title_color=7C3AED&area=true&area_color=F1F5F9&hide_border=true&custom_title=Contribution%20activity">
+  <img alt="Contribution activity graph" src="https://github-readme-activity-graph.vercel.app/graph?username=manavmax&bg_color=0B1120&color=F1F5F9&line=22D3EE&point=A78BFA&title_color=A78BFA&area=true&area_color=1E293B&hide_border=true&custom_title=Contribution%20activity" width="98%">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8&icon_color=34D399&ring_color=22D3EE">
+  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=7C3AED&text_color=475569&icon_color=059669&ring_color=0891B2">
+  <img alt="GitHub statistics" src="https://github-readme-stats.vercel.app/api?username=manavmax&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8&icon_color=34D399&ring_color=22D3EE" height="165">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&langs_count=8&hide_border=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8">
+  <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&langs_count=8&hide_border=true&bg_color=FFFFFF&title_color=7C3AED&text_color=475569">
+  <img alt="Most used languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=manavmax&layout=compact&langs_count=8&hide_border=true&bg_color=0B1120&title_color=A78BFA&text_color=94A3B8" height="165">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)"  srcset="assets/snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/snake-light.svg">
+  <img alt="A snake eating my contribution graph" src="assets/snake-dark.svg" width="100%">
+</picture>
+
+<samp>The two stat cards are the only things on this page served by someone else's server, so they are
+the only things that can break. Everything above them is an SVG generated by a script in this repo.</samp>
+
+</div>
+
+<div align="center"><img alt="" src="assets/rule-dark.svg" width="100%"></div>
+
+## &nbsp;⟡&nbsp; Colophon
+
+**Manav Sharma** — final-year B.Tech in Computer Science, Class of 2026, India.
+Looking for research and systems work where the validation is taken as seriously as the model.
+
+<samp>
+Set in <b>Inter</b> and <b>JetBrains Mono</b>, with a system fallback stack — GitHub serves SVG under
+<code>default-src 'none'</code>, so no webfont can be fetched and none is relied on. Every graphic
+above is generated by <code>build/render.py</code> into paired light and dark plates and animated with
+CSS <code>@keyframes</code> inside the SVG, which GitHub's CSP allows via <code>style-src 'unsafe-inline'</code>.
+The dateline and the merge counts are rewritten daily by GitHub Actions between HTML-comment sentinels.
+No JavaScript runs anywhere on this page; it cannot.
+</samp>
+
+<samp><b>ERRATA</b> — if a number here is wrong, open an issue. I would rather be corrected in public
+than quoted incorrectly.</samp>

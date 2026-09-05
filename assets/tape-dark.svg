@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="330" viewBox="0 0 1600 330" role="img" aria-label="Selective signal — the model declines to act when it is not confident"><title>Selective signal — the model declines to act when it is not confident</title>
+<defs>
+<linearGradient id="tl" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#22D3EE"/><stop offset=".45" stop-color="#FBBF24"/><stop offset="1" stop-color="#A78BFA"/>
+</linearGradient>
+<linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#F1F5F9" stop-opacity="0"/><stop offset="1" stop-color="#F1F5F9" stop-opacity=".16"/>
+</linearGradient>
+</defs>
+<style>/*<![CDATA[*/
+*{transform-box:fill-box;transform-origin:center}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes halo{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
+.rise{opacity:0;animation:rise .75s cubic-bezier(.22,1,.36,1) forwards}
+.fade{opacity:0;animation:fade .9s ease-out forwards}
+.halo{animation:halo 2.6s ease-out infinite}
+
+@keyframes scan{0%{transform:translateX(0)}100%{transform:translateX(1334px)}}
+.scan{animation:scan 9s cubic-bezier(.6,0,.4,1) infinite}
+/*]]>*/</style>
+<rect x="0.0" y="0.0" width="1600.0" height="330.0" fill="#0B1120"/>
+<text x="88.0" y="44.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#94A3B8" letter-spacing="3.4" font-weight="600">SELECTIVE SIGNAL</text>
+<text x="296.0" y="44.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#5B6B85" letter-spacing="1.2">WHAT THE MODEL DOES WHEN IT IS NOT CONFIDENT</text>
+<text x="1512.0" y="44.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#5B6B85" text-anchor="end" dx="-0.70" letter-spacing="1.4">SCHEMATIC  ·  NOT BACKTEST OUTPUT</text>
+<rect x="88.0" y="86.0" width="484.2" height="164.0" fill="#22D3EE" fill-opacity=".085"/>
+<line x1="88.0" y1="86.0" x2="88.0" y2="250.0" stroke="#22D3EE" stroke-width="1" stroke-opacity=".35"/>
+<text x="100.0" y="106.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#22D3EE" letter-spacing="1.6" font-weight="600">REGIME A</text>
+<text x="100.0" y="124.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#22D3EE" letter-spacing="1.4">ACT</text>
+<rect x="572.2" y="86.0" width="413.0" height="164.0" fill="#FBBF24" fill-opacity=".085"/>
+<line x1="572.2" y1="86.0" x2="572.2" y2="250.0" stroke="#FBBF24" stroke-width="1" stroke-opacity=".35"/>
+<text x="584.2" y="106.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#FBBF24" letter-spacing="1.6" font-weight="600">REGIME B</text>
+<text x="584.2" y="124.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#5B6B85" letter-spacing="1.4">ABSTAIN</text>
+<rect x="985.1" y="86.0" width="526.9" height="164.0" fill="#A78BFA" fill-opacity=".085"/>
+<line x1="985.1" y1="86.0" x2="985.1" y2="250.0" stroke="#A78BFA" stroke-width="1" stroke-opacity=".35"/>
+<text x="997.1" y="106.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#A78BFA" letter-spacing="1.6" font-weight="600">REGIME C</text>
+<text x="997.1" y="124.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="#A78BFA" letter-spacing="1.4">ACT</text>
+<line x1="88.0" y1="250.0" x2="1512.0" y2="250.0" stroke="#1E293B" stroke-width="1"/>
+<g class="scan"><rect x="88.0" y="86.0" width="90.0" height="164.0" fill="url(#scan)"/></g>
+<polyline points="88.0,239.4 97.6,238.5 107.1,236.3 116.7,237.3 126.2,240.2 135.8,240.2 145.3,239.1 154.9,236.7 164.5,239.2 174.0,242.0 183.6,240.4 193.1,239.3 202.7,235.9 212.2,233.7 221.8,233.8 231.4,234.3 240.9,228.7 250.5,229.2 260.0,230.9 269.6,233.3 279.1,233.0 288.7,232.6 298.3,233.3 307.8,233.4 317.4,232.7 326.9,231.1 336.5,228.7 346.0,228.2 355.6,232.0 365.2,230.4 374.7,233.4 384.3,233.7 393.8,236.9 403.4,236.8 412.9,238.5 422.5,237.9 432.1,230.6 441.6,230.7 451.2,228.8 460.7,231.6 470.3,232.2 479.8,230.7 489.4,230.8 499.0,229.9 508.5,229.6 518.1,231.7 527.6,230.4 537.2,232.2 546.7,228.0 556.3,229.0 565.9,227.5 575.4,227.4 585.0,225.4 594.5,226.8 604.1,224.7 613.6,225.1 623.2,222.4 632.8,221.2 642.3,220.9 651.9,222.7 661.4,221.2 671.0,220.2 680.5,216.7 690.1,217.6 699.7,216.5 709.2,215.5 718.8,215.0 728.3,214.6 737.9,214.3 747.4,215.7 757.0,218.0 766.6,219.0 776.1,217.8 785.7,214.6 795.2,212.5 804.8,210.3 814.3,208.7 823.9,207.3 833.4,207.0 843.0,205.4 852.6,201.6 862.1,202.4 871.7,204.0 881.2,199.8 890.8,199.4 900.3,197.4 909.9,195.6 919.5,198.1 929.0,192.9 938.6,189.1 948.1,188.8 957.7,187.3 967.2,187.1 976.8,189.1 986.4,189.5 995.9,188.5 1005.5,186.0 1015.0,184.3 1024.6,184.0 1034.1,180.9 1043.7,182.5 1053.3,180.6 1062.8,178.1 1072.4,178.6 1081.9,182.4 1091.5,184.2 1101.0,183.6 1110.6,182.3 1120.2,178.8 1129.7,180.8 1139.3,180.7 1148.8,179.2 1158.4,179.4 1167.9,184.4 1177.5,182.6 1187.1,177.4 1196.6,175.1 1206.2,176.9 1215.7,177.7 1225.3,177.1 1234.8,171.5 1244.4,170.1 1254.0,169.7 1263.5,166.2 1273.1,166.2 1282.6,162.0 1292.2,163.4 1301.7,164.3 1311.3,162.6 1320.9,159.4 1330.4,157.8 1340.0,157.0 1349.5,160.9 1359.1,162.3 1368.6,163.5 1378.2,164.6 1387.8,163.2 1397.3,163.8 1406.9,161.9 1416.4,161.6 1426.0,162.2 1435.5,161.8 1445.1,160.8 1454.7,158.8 1464.2,159.7 1473.8,160.1 1483.3,162.9 1492.9,159.3 1502.4,156.0 1512.0,156.3" fill="none" stroke="url(#tl)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" style="stroke-dasharray:1459;stroke-dashoffset:1459;animation:draw 2.1s .25s cubic-bezier(.4,0,.5,1) forwards"/>
+<g class="fade" style="animation-delay:2.00s"><path d="M120.7,229.2 L131.7,229.2 L126.2,219.2 Z" fill="#22D3EE"/></g>
+<g class="fade" style="animation-delay:2.05s"><path d="M197.2,224.9 L208.2,224.9 L202.7,214.9 Z" fill="#22D3EE"/></g>
+<g class="fade" style="animation-delay:2.10s"><path d="M273.6,222.0 L284.6,222.0 L279.1,212.0 Z" fill="#22D3EE"/></g>
+<g class="fade" style="animation-delay:2.15s"><path d="M350.1,221.0 L361.1,221.0 L355.6,211.0 Z" fill="#22D3EE"/></g>
+<g class="fade" style="animation-delay:2.20s"><path d="M436.1,219.7 L447.1,219.7 L441.6,209.7 Z" fill="#22D3EE"/></g>
+<g class="fade" style="animation-delay:2.25s"><path d="M512.6,220.7 L523.6,220.7 L518.1,210.7 Z" fill="#22D3EE"/></g>
+<g class="fade" style="animation-delay:2.30s"><line x1="589.5" y1="211.8" x2="599.5" y2="211.8" stroke="#5B6B85" stroke-width="2" stroke-linecap="round"/></g>
+<g class="fade" style="animation-delay:2.35s"><line x1="675.5" y1="201.7" x2="685.5" y2="201.7" stroke="#5B6B85" stroke-width="2" stroke-linecap="round"/></g>
+<g class="fade" style="animation-delay:2.40s"><line x1="752.0" y1="203.0" x2="762.0" y2="203.0" stroke="#5B6B85" stroke-width="2" stroke-linecap="round"/></g>
+<g class="fade" style="animation-delay:2.45s"><line x1="828.4" y1="192.0" x2="838.4" y2="192.0" stroke="#5B6B85" stroke-width="2" stroke-linecap="round"/></g>
+<g class="fade" style="animation-delay:2.50s"><line x1="904.9" y1="180.6" x2="914.9" y2="180.6" stroke="#5B6B85" stroke-width="2" stroke-linecap="round"/></g>
+<g class="fade" style="animation-delay:2.55s"><path d="M990.4,177.5 L1001.4,177.5 L995.9,167.5 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.60s"><path d="M1066.9,167.6 L1077.9,167.6 L1072.4,157.6 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.65s"><path d="M1143.3,168.2 L1154.3,168.2 L1148.8,158.2 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.70s"><path d="M1229.3,160.5 L1240.3,160.5 L1234.8,150.5 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.75s"><path d="M1305.8,151.6 L1316.8,151.6 L1311.3,141.6 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.80s"><path d="M1382.3,152.2 L1393.3,152.2 L1387.8,142.2 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.85s"><path d="M1458.7,148.7 L1469.7,148.7 L1464.2,138.7 Z" fill="#A78BFA"/></g>
+<g class="fade" style="animation-delay:2.6s">
+<path d="M93.0,294.0 L104.0,294.0 L98.5,284.0 Z" fill="#34D399"/>
+<text x="116.0" y="296.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="0.4">ACT — confidence above threshold, position taken</text>
+<line x1="530.4" y1="290.0" x2="541.4" y2="290.0" stroke="#5B6B85" stroke-width="2" stroke-linecap="round"/>
+<text x="553.4" y="296.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#5B6B85" letter-spacing="0.4">ABSTAIN — below threshold, no position, no guess</text>
+</g></svg>

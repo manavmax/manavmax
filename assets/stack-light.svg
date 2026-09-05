@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="380" viewBox="0 0 1600 380" role="img" aria-label="Apparatus — tools grouped by what they are for"><title>Apparatus — tools grouped by what they are for</title>
+<style>/*<![CDATA[*/
+*{transform-box:fill-box;transform-origin:center}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes halo{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
+.rise{opacity:0;animation:rise .75s cubic-bezier(.22,1,.36,1) forwards}
+.fade{opacity:0;animation:fade .9s ease-out forwards}
+.halo{animation:halo 2.6s ease-out infinite}
+/*]]>*/</style>
+<rect x="0.0" y="0.0" width="1600.0" height="380.0" fill="#FFFFFF"/>
+<text x="88.0" y="44.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#475569" letter-spacing="3.4" font-weight="600">APPARATUS</text>
+<text x="218.0" y="44.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="1.2">GROUPED BY WHAT IT IS FOR, NOT BY LOGO AVAILABILITY</text>
+<text x="88.0" y="106.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#0891B2" letter-spacing="2.2" font-weight="600">SYSTEMS</text>
+<line x1="88.0" y1="118.0" x2="238.0" y2="118.0" stroke="#0891B2" stroke-width="1" stroke-opacity=".28"/>
+<g class="rise" style="animation-delay:0.08s">
+<rect x="264.0" y="84.0" width="68.5" height="32.0" fill="#0891B2" rx="16.0" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="298.2" y="105.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">C++20</text>
+</g>
+<g class="rise" style="animation-delay:0.12s">
+<rect x="342.5" y="84.0" width="76.6" height="32.0" fill="#0891B2" rx="16.0" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="380.8" y="105.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">Python</text>
+</g>
+<g class="rise" style="animation-delay:0.17s">
+<rect x="429.1" y="84.0" width="109.0" height="32.0" fill="#0891B2" rx="16.0" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="483.6" y="105.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">TypeScript</text>
+</g>
+<g class="rise" style="animation-delay:0.22s">
+<rect x="548.1" y="84.0" width="109.0" height="32.0" fill="#0891B2" rx="16.0" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="602.6" y="105.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">JavaScript</text>
+</g>
+<text x="88.0" y="160.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#7C3AED" letter-spacing="2.2" font-weight="600">LEARNING</text>
+<line x1="88.0" y1="172.0" x2="238.0" y2="172.0" stroke="#7C3AED" stroke-width="1" stroke-opacity=".28"/>
+<g class="rise" style="animation-delay:0.26s">
+<rect x="264.0" y="138.0" width="84.7" height="32.0" fill="#7C3AED" rx="16.0" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="306.4" y="159.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">PyTorch</text>
+</g>
+<g class="rise" style="animation-delay:0.30s">
+<rect x="358.7" y="138.0" width="109.0" height="32.0" fill="#7C3AED" rx="16.0" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="413.2" y="159.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">TensorFlow</text>
+</g>
+<g class="rise" style="animation-delay:0.35s">
+<rect x="477.7" y="138.0" width="125.2" height="32.0" fill="#7C3AED" rx="16.0" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="540.3" y="159.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">scikit-learn</text>
+</g>
+<g class="rise" style="animation-delay:0.40s">
+<rect x="612.9" y="138.0" width="133.3" height="32.0" fill="#7C3AED" rx="16.0" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="679.5" y="159.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">meta-learning</text>
+</g>
+<text x="88.0" y="214.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#059669" letter-spacing="2.2" font-weight="600">STATE</text>
+<line x1="88.0" y1="226.0" x2="238.0" y2="226.0" stroke="#059669" stroke-width="1" stroke-opacity=".28"/>
+<g class="rise" style="animation-delay:0.44s">
+<rect x="264.0" y="192.0" width="109.0" height="32.0" fill="#059669" rx="16.0" stroke="#059669" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="318.5" y="213.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">PostgreSQL</text>
+</g>
+<g class="rise" style="animation-delay:0.48s">
+<rect x="383.0" y="192.0" width="68.5" height="32.0" fill="#059669" rx="16.0" stroke="#059669" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="417.2" y="213.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">Redis</text>
+</g>
+<g class="rise" style="animation-delay:0.53s">
+<rect x="461.5" y="192.0" width="76.6" height="32.0" fill="#059669" rx="16.0" stroke="#059669" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="499.8" y="213.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">SQLite</text>
+</g>
+<text x="88.0" y="268.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#DB2777" letter-spacing="2.2" font-weight="600">SURFACE</text>
+<line x1="88.0" y1="280.0" x2="238.0" y2="280.0" stroke="#DB2777" stroke-width="1" stroke-opacity=".28"/>
+<g class="rise" style="animation-delay:0.57s">
+<rect x="264.0" y="246.0" width="84.7" height="32.0" fill="#DB2777" rx="16.0" stroke="#DB2777" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="306.4" y="267.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">Next.js</text>
+</g>
+<g class="rise" style="animation-delay:0.62s">
+<rect x="358.7" y="246.0" width="68.5" height="32.0" fill="#DB2777" rx="16.0" stroke="#DB2777" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="392.9" y="267.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">React</text>
+</g>
+<g class="rise" style="animation-delay:0.66s">
+<rect x="437.2" y="246.0" width="84.7" height="32.0" fill="#DB2777" rx="16.0" stroke="#DB2777" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="479.6" y="267.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">FastAPI</text>
+</g>
+<text x="88.0" y="322.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#D97706" letter-spacing="2.2" font-weight="600">SHIPPING</text>
+<line x1="88.0" y1="334.0" x2="238.0" y2="334.0" stroke="#D97706" stroke-width="1" stroke-opacity=".28"/>
+<g class="rise" style="animation-delay:0.71s">
+<rect x="264.0" y="300.0" width="76.6" height="32.0" fill="#D97706" rx="16.0" stroke="#D97706" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="302.3" y="321.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">Docker</text>
+</g>
+<g class="rise" style="animation-delay:0.75s">
+<rect x="350.6" y="300.0" width="141.4" height="32.0" fill="#D97706" rx="16.0" stroke="#D97706" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="421.3" y="321.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">GitHub Actions</text>
+</g>
+<g class="rise" style="animation-delay:0.80s">
+<rect x="502.0" y="300.0" width="133.3" height="32.0" fill="#D97706" rx="16.0" stroke="#D97706" stroke-width="1" fill-opacity=".07" stroke-opacity=".38"/>
+<text x="568.6" y="321.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13.5" fill="#0F172A" text-anchor="middle">CMake / CTest</text>
+</g>
+</svg>

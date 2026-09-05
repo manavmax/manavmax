@@ -1,0 +1,59 @@
+name: build profile
+
+# Two live things on this profile: the merged-PR counts and the contribution
+# snake. Both are regenerated here and committed, so the rendered page never
+# depends on a third-party service being up when a visitor arrives.
+
+on:
+  schedule:
+    - cron: "37 5 * * *"        # 05:37 UTC -- deliberately off the hour; every
+                               # cron job on GitHub fires at :00 and gets queued
+  workflow_dispatch:            # so I can force a rebuild by hand
+  push:
+    branches: [main]
+    paths:                      # don't rebuild when only prose changed
+      - "build/**"
+      - ".github/workflows/build.yml"
+
+permissions:
+  contents: write               # the job commits back to this repo
+
+concurrency:                    # a manual run should not race the nightly one
+  group: build-profile
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # render.py and build_readme.py are standard library only -- nothing to install.
+
+      - name: Render plates and rewrite the live regions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # lifts Search API to 30 req/min
+        run: python build/build_readme.py
+
+      - name: Generate the contribution snake
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            assets/snake-dark.svg?palette=github-dark
+            assets/snake-light.svg?palette=github-light
+
+      - name: Commit only if something actually changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A README.md assets
+          if git diff --cached --quiet; then
+            echo "nothing changed -- no commit"
+          else
+            git commit -m "profile: rebuild plates and refresh live counts [skip ci]"
+            git push
+          fi

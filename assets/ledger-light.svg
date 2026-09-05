@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="580" viewBox="0 0 1600 580" role="img" aria-label="The ledger — four claims and the verdict on each"><title>The ledger — four claims and the verdict on each</title>
+<style>/*<![CDATA[*/
+*{transform-box:fill-box;transform-origin:center}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes halo{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(3.2);opacity:0}}
+.rise{opacity:0;animation:rise .75s cubic-bezier(.22,1,.36,1) forwards}
+.fade{opacity:0;animation:fade .9s ease-out forwards}
+.halo{animation:halo 2.6s ease-out infinite}
+/*]]>*/</style>
+<rect x="0.0" y="0.0" width="1600.0" height="580.0" fill="#FFFFFF"/>
+<text x="88.0" y="46.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#475569" letter-spacing="3.4" font-weight="600">THE LEDGER</text>
+<text x="220.0" y="46.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="1.2">EVERY CLAIM AND THE VERDICT ON IT  ·  TWO OF THE FOUR ARE NOT WINS</text>
+<text x="1512.0" y="46.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" text-anchor="end" dx="-0.60" letter-spacing="1.2">4 ENTRIES</text>
+<line x1="88.0" y1="66.0" x2="1512.0" y2="66.0" stroke="#E2E8F0" stroke-width="1"/>
+<g class="rise" style="animation-delay:0.12s">
+<rect x="88.0" y="96.0" width="1424.0" height="96.0" fill="#FFFFFF" rx="14" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="88.0" y="96.0" width="3.0" height="96.0" fill="#7C3AED" rx="1.5"/>
+<circle cx="120.0" cy="144.0" r="5.5" fill="#7C3AED"/>
+<circle cx="120.0" cy="144.0" r="5.5" fill="#7C3AED" class="halo" style="animation-delay:0.0s"/>
+<text x="144.0" y="138.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" fill="#0F172A" font-weight="680">Regime-Aware Meta-Learning for Selective Directional Trading</text>
+<text x="144.0" y="164.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="0.2">Unsupervised regime clustering + a MAML-inspired classifier that abstains when unsure</text>
+<rect x="1358.6" y="112.0" width="131.4" height="27.0" fill="#7C3AED" rx="13.5" stroke="#7C3AED" stroke-width="1" fill-opacity=".07" stroke-opacity=".5"/>
+<text x="1424.3" y="131.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#7C3AED" text-anchor="middle" dx="-0.65" letter-spacing="1.3" font-weight="600">PEER-REVIEWED</text>
+<text x="1490.0" y="166.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" fill="#475569" text-anchor="end" dx="-0.25" letter-spacing="0.5">IEEE ICIPTM 2026  ·  DOI 10.1109/ICIPTM69057.2026.11466047</text>
+</g>
+<g class="rise" style="animation-delay:0.25s">
+<rect x="88.0" y="208.0" width="1424.0" height="96.0" fill="#FFFFFF" rx="14" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="88.0" y="208.0" width="3.0" height="96.0" fill="#D97706" rx="1.5"/>
+<circle cx="120.0" cy="256.0" r="5.5" fill="#D97706"/>
+<circle cx="120.0" cy="256.0" r="5.5" fill="#D97706" class="halo" style="animation-delay:0.5s"/>
+<text x="144.0" y="250.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" fill="#0F172A" font-weight="680">Regime-Route</text>
+<text x="144.0" y="276.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="0.2">Proof-carrying execution: every routing decision emits a hash-verifiable receipt</text>
+<rect x="1389.8" y="224.0" width="100.2" height="27.0" fill="#D97706" rx="13.5" stroke="#D97706" stroke-width="1" fill-opacity=".07" stroke-opacity=".5"/>
+<text x="1439.9" y="243.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#D97706" text-anchor="middle" dx="-0.65" letter-spacing="1.3" font-weight="600">FALSIFIED</text>
+<text x="1490.0" y="278.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" fill="#475569" text-anchor="end" dx="-0.25" letter-spacing="0.5">13M+ ORDER-BOOK ROWS  ·  PAIRED COUNTERFACTUALS  ·  NO EDGE FOUND</text>
+</g>
+<g class="rise" style="animation-delay:0.38s">
+<rect x="88.0" y="320.0" width="1424.0" height="96.0" fill="#FFFFFF" rx="14" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="88.0" y="320.0" width="3.0" height="96.0" fill="#059669" rx="1.5"/>
+<circle cx="120.0" cy="368.0" r="5.5" fill="#059669"/>
+<circle cx="120.0" cy="368.0" r="5.5" fill="#059669" class="halo" style="animation-delay:1.0s"/>
+<text x="144.0" y="362.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" fill="#0F172A" font-weight="680">Tensor-Forge</text>
+<text x="144.0" y="388.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="0.2">A JIT tensor compiler that lowers and shape-specialises itself — no PyTorch, no CUDA</text>
+<rect x="1405.4" y="336.0" width="84.6" height="27.0" fill="#059669" rx="13.5" stroke="#059669" stroke-width="1" fill-opacity=".07" stroke-opacity=".5"/>
+<text x="1447.7" y="355.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#059669" text-anchor="middle" dx="-0.65" letter-spacing="1.3" font-weight="600">SHIPPED</text>
+<text x="1490.0" y="390.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" fill="#475569" text-anchor="end" dx="-0.25" letter-spacing="0.5">5 / 5 CTEST SUITES PASSING  ·  FULL CI</text>
+</g>
+<g class="rise" style="animation-delay:0.51s">
+<rect x="88.0" y="432.0" width="1424.0" height="96.0" fill="#FFFFFF" rx="14" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="88.0" y="432.0" width="3.0" height="96.0" fill="#0891B2" rx="1.5"/>
+<circle cx="120.0" cy="480.0" r="5.5" fill="#0891B2"/>
+<circle cx="120.0" cy="480.0" r="5.5" fill="#0891B2" class="halo" style="animation-delay:1.5s"/>
+<text x="144.0" y="474.0" font-family="Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" font-size="23" fill="#0F172A" font-weight="680">Bitcoin Alpha System</text>
+<text x="144.0" y="500.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#94A3B8" letter-spacing="0.2">In rebuild — walk-forward and holdout validation are still running</text>
+<rect x="1374.2" y="448.0" width="115.8" height="27.0" fill="#0891B2" rx="13.5" stroke="#0891B2" stroke-width="1" fill-opacity=".07" stroke-opacity=".5"/>
+<text x="1432.1" y="467.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13" fill="#0891B2" text-anchor="middle" dx="-0.65" letter-spacing="1.3" font-weight="600">UNDER AUDIT</text>
+<text x="1490.0" y="502.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12.5" fill="#475569" text-anchor="end" dx="-0.25" letter-spacing="0.5">NO RETURN FIGURE PUBLISHED UNTIL IT CLEARS</text>
+</g>
+<g class="fade" style="animation-delay:.85s">
+<text x="88.0" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#94A3B8" letter-spacing="2.2">KEY</text>
+<circle cx="136.0" cy="554.0" r="4" fill="#7C3AED"/>
+<text x="148.0" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#7C3AED" letter-spacing="0.8" font-weight="600">PEER-REVIEWED</text>
+<text x="249.6" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#94A3B8" letter-spacing="0.2">external review passed</text>
+<circle cx="438.0" cy="554.0" r="4" fill="#059669"/>
+<text x="450.0" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#059669" letter-spacing="0.8" font-weight="600">SHIPPED</text>
+<text x="508.4" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#94A3B8" letter-spacing="0.2">tested and running</text>
+<circle cx="668.0" cy="554.0" r="4" fill="#D97706"/>
+<text x="680.0" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#D97706" letter-spacing="0.8" font-weight="600">FALSIFIED</text>
+<text x="752.8" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#94A3B8" letter-spacing="0.2">effect not found, published anyway</text>
+<circle cx="1027.6" cy="554.0" r="4" fill="#0891B2"/>
+<text x="1039.6" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#0891B2" letter-spacing="0.8" font-weight="600">UNDER AUDIT</text>
+<text x="1126.8" y="558.0" font-family="'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="#94A3B8" letter-spacing="0.2">validation still running</text>
+</g></svg>
