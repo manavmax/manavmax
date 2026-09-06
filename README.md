@@ -9,18 +9,29 @@
 
 <br><!-- dateline:start --><code>SESSION 2026-09-06</code> · <code>PLATES 14</code> · <code>RENDER build/render.py</code> · <code>CHECK build/verify.py</code> · <code>JS 0</code><!-- dateline:end -->
 
+<br>
 
+---
 </div>
-
 <br><picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/blotter-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/blotter-light.svg">
   <img alt="Claim blotter: four projects and the verdict on each — peer-reviewed, falsified, shipped, under audit" src="assets/blotter-dark.svg" width="100%">
 </picture>
-<br>Most profiles are a showcase, where every row is a win. This one is a blotter, so it has a
-verdict column — and **two of the four verdicts are not wins.** That is the point. Hiding them
+
+
+
+
+<br>
+
+Most profiles are a showcase, where every row is a win. This one is a blotter, so it has a
+verdict column, and **two of the four verdicts are not wins.** That is the point. Hiding them
 would make the other two worth less.
 
+
+
+
+<br>
 
 | | Work | Verdict | The record |
 |:--|:--|:--|:--|
@@ -32,7 +43,9 @@ would make the other two worth less.
 
 <samp><b>KEY</b> — <code>PEER-REVIEWED</code> outside review passed · <code>SHIPPED</code> tested and running · <code>FALSIFIED</code> looked for the effect, did not find it, published anyway · <code>UNDER AUDIT</code> still validating, nothing claimed until it clears</samp>
 
+<br>
 
+---
 <br><picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/receipt-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/receipt-light.svg">
@@ -40,11 +53,14 @@ would make the other two worth less.
 </picture>
 <br>A receipt is only worth something if a stranger can check it. Every routing decision in
 Regime-Route emits one, and anyone holding the same tape can recompute the digest and compare it
-byte-for-byte — no trust in my log required. **That machinery works.** Pointed at 13M+ real
+byte-for-byte, no trust in my log required. **That machinery works.** Pointed at 13M+ real
 order-book rows with paired counterfactuals, it came back and said the effect is not there: the
 honest, final conclusion was that **no economically meaningful edge was found.** That is a
-feature, not a failure to hide — it is what validation discipline looks like when the answer is no.
+feature, not a failure to hide, it is what validation discipline looks like when the answer is no.
 
+<br>
+
+---
 <br><picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/regime-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/regime-light.svg">
@@ -62,7 +78,11 @@ with no labels, then let the classifier **decline to act** in the regime it cann
 lane is the part that makes it a rule rather than a slogan: the model's own confidence, with the
 line it has to clear before a position is allowed. A model that stands down 29% of the time and is
 right when it speaks beats one that always has an opinion. The plate is a **schematic of the rule,
-not backtest output** — the shape is illustrative, the argument is not.
+not backtest output**; the shape is illustrative, the argument is not.
+
+<br>
+
+---
 
 <br><picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/forge-dark.svg">
@@ -70,15 +90,19 @@ not backtest output** — the shape is illustrative, the argument is not.
   <img alt="Tensor-Forge: five lowering stages — parse to graph IR, shape specialise, lower to a kernel plan, emit WGSL, dispatch to the GPU. No PyTorch, no CUDA, 5/5 CTest suites." src="assets/forge-dark.svg" width="100%">
 </picture>
 
-<br>No PyTorch and no CUDA underneath means the interesting claim is not that it runs — it is that
+<br>No PyTorch and no CUDA underneath means the interesting claim is not that it runs; it is that
 there is nothing below it doing the real work. A tensor graph is parsed, shape-specialised,
 lowered, emitted as WGSL and dispatched, and **you can read what came out of every one of those
 five stages.** 5/5 CTest suites, full CI. The plate is a schematic of the path a kernel takes, not
 a map of the source tree.
 
-### <samp>5 · UPSTREAM — THE PART OF THE RECORD I DID NOT GRADE MYSELF</samp>
+<br>
 
-<br><samp>COUNTED LIVE BY THE GITHUB SEARCH API, NOT BY ME</samp>
+---
+
+
+### <samp><br>5 · UPSTREAM — THE PART OF THE RECORD I DID NOT GRADE MYSELF</samp>
+<samp>COUNTED LIVE BY THE GITHUB SEARCH API, NOT BY ME</samp>
 <!-- upstream:start -->
 | Project | Maintained by | Where I worked | Merged |
 |:--|:--|:--|--:|
@@ -90,7 +114,11 @@ a map of the source tree.
 <!-- upstream:end -->
 
 The Oppia one is the one I would point at. The Redis upgrade was unglamorous infrastructure work
-that was **failing CI for every other contributor** — which is exactly why it was worth doing.
+that was **failing CI for every other contributor**, which is exactly why it was worth doing.
+
+<br>
+
+---
 
 <br><picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/stack-dark.svg">
@@ -98,7 +126,7 @@ that was **failing CI for every other contributor** — which is exactly why it 
   <img alt="Apparatus: tools grouped by purpose — systems, learning, state, surface, shipping" src="assets/stack-dark.svg" width="100%">
 </picture>
 
-<br><picture>
+<picture>
   <source media="(prefers-color-scheme: dark)"  srcset="assets/keys-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/keys-light.svg">
   <img alt="Function key rail: paper, projects, contact" src="assets/keys-dark.svg" width="100%">
@@ -106,7 +134,7 @@ that was **failing CI for every other contributor** — which is exactly why it 
 
 <div align="center">
 
-<a href="https://doi.org/10.1109/ICIPTM69057.2026.11466047"><kbd>F1</kbd> <samp>IEEE PAPER</samp></a> &nbsp;·&nbsp;
+<br><a href="https://doi.org/10.1109/ICIPTM69057.2026.11466047"><kbd>F1</kbd> <samp>IEEE PAPER</samp></a> &nbsp;·&nbsp;
 <a href="https://github.com/manavmax/Regime-Route"><kbd>F2</kbd> <samp>REGIME-ROUTE</samp></a> &nbsp;·&nbsp;
 <a href="https://github.com/manavmax/Tensor-Forge"><kbd>F3</kbd> <samp>TENSOR-FORGE</samp></a> &nbsp;·&nbsp;
 <a href="https://github.com/manavmax/Bitcoin-Alpha-System"><kbd>F4</kbd> <samp>BITCOIN-ALPHA</samp></a> &nbsp;·&nbsp;
@@ -115,12 +143,13 @@ that was **failing CI for every other contributor** — which is exactly why it 
 
 </div>
 
-### <samp>7 · COLOPHON</samp>
+<br>
+
+---
+
+### <samp><br>7 · COLOPHON</samp>
 
 **Manav Sharma** — Bachelors in Computer Science Engineering, Class of 2026.
 Looking for research and systems work where the validation is taken as seriously as the model.
 If a number on this page is wrong, open an issue: I would rather be corrected in public than
 quoted incorrectly.
-
-
-
